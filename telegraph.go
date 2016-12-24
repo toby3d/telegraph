@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/valyala/fasthttp"
-	"golang.org/x/net/html"
 )
 
 // Telegraph constants
@@ -82,7 +81,7 @@ type (
 		ImageURL string `json:"image_url"`
 
 		// Optional. Content of the page.
-		Content []NodeElement `json:"content"`
+		Content []Node `json:"content"`
 
 		// Number of page views for the page.
 		Views int `json:"views"`
@@ -112,10 +111,10 @@ type (
 		// Optional. Attributes of the DOM element. Key of object represents
 		// name of attribute, value represents value of attribute. Available
 		// attributes: href, src.
-		Attrs []html.Attribute `json:"attrs"`
+		Attrs map[string]string `json:"attrs"`
 
 		// Optional. List of child nodes for the DOM element.
-		Children []NodeElement `json:"children"`
+		Children []Node `json:"children"`
 	}
 
 	// Response represents a response from the Telegram API with the result
@@ -130,20 +129,20 @@ type (
 	}
 )
 
-func request(dst []byte, url string, args *fasthttp.Args) (*Response, error) {
-	_, body, err := fasthttp.Post(dst, url, args)
+func request(url string, args *fasthttp.Args) (*Response, error) {
+	_, res, err := fasthttp.Post(nil, url, args)
 	if err != nil {
 		return nil, err
 	}
 
-	var resp Response
-	if err := json.Unmarshal(body, &resp); err != nil {
+	var tResp Response
+	if err := json.Unmarshal(res, &tResp); err != nil {
 		return nil, err
 	}
 
-	if !resp.Ok {
-		return nil, errors.New(resp.Error)
+	if !tResp.Ok {
+		return nil, errors.New(tResp.Error)
 	}
 
-	return &resp, nil
+	return &tResp, nil
 }
