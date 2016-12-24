@@ -131,27 +131,6 @@ type (
 )
 
 func request(dst []byte, url string, args *fasthttp.Args) (*Response, error) {
-	/*
-		if args != nil {
-			url += "?" + args.String()
-		}
-
-		var req fasthttp.Request
-		req.Header.SetUserAgent("telegraph")
-		req.Header.SetMethod("POST")
-		req.Header.SetContentType("application/json; charset=utf-8")
-		req.SetRequestURI(url)
-		if dst != nil {
-			req.SetBody(dst)
-		}
-
-		var res fasthttp.Response
-		err := fasthttp.Do(&req, &res)
-		if err != nil {
-			return nil, err
-		}
-	*/
-
 	_, res, err := fasthttp.Post(dst, url, args)
 	if err != nil {
 		return nil, err

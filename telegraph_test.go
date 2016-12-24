@@ -50,15 +50,12 @@ func domToNode(domNode *html.Node) interface{} {
 				if nodeElement.Attrs == nil {
 					break
 				}
-
 				nodeElement.Attrs[0].Val = attr.Val
-				// break
 			}
 		}
 	}
 
 	for child := domNode.FirstChild; child != nil; child = child.NextSibling {
-		// dlog.D(nodeElement.Children)
 		nodeElement.Children = append(nodeElement.Children, domToNode(child))
 	}
 
@@ -81,17 +78,18 @@ func TestCreatePage(t *testing.T) {
 	}
 
 	newPage := &Page{
-		Path:       demoPage.Path,
-		Title:      "5 предложений",
+		Title:      "5 sentences",
 		AuthorName: "toby3d",
 		Content:    content,
 	}
 
-	demoPage, err := demoAccount.CreatePage(newPage, true)
+	page, err := demoAccount.CreatePage(newPage, true)
 	if err != nil {
 		t.Error(err.Error())
 	}
-	t.Logf("%#v", demoPage)
+
+	demoPage = *page
+	t.Logf("%#v", page)
 }
 
 func TestEditAccountInfo(t *testing.T) {
@@ -115,6 +113,7 @@ func TestEditPage(t *testing.T) {
 	}
 
 	update := &Page{
+		Path:       demoPage.Path,
 		Title:      "AAA Games",
 		AuthorName: "Galyonkin",
 		Content:    content,
