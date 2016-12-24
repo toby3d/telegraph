@@ -1,41 +1,45 @@
 package telegraph
 
-import "testing"
+import (
+	"testing"
+)
 
 var (
-	demoAccount = &Account{
-		AccessToken: "b968da509bb76866c35425099bc0989a5ec3b32997d55286c657e6994bbb",
-	}
-	demoPage = &Page{
-		Path: "Sample-Page-12-15",
-	}
-	demoContent = `<p>Hello, world!<p>`
+	demoAccount Account
+	demoPage    Page
+	demoContent = `<p>Hello, World!</p>`
 )
 
 func TestCreateAccount(t *testing.T) {
-	newAccount, err := CreateAccount("Sandbox", "Anonymous", "")
+	acc, err := CreateAccount("Sandbox", "Anonymous", "")
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
-	t.Logf("New account created!\nAccess Token: %s\nAuth URL: %s\nShort Name: %s\nAuthor Name: %s\nPage Count: %d", newAccount.AccessToken, newAccount.AuthURL, newAccount.ShortName, newAccount.AuthorName, newAccount.PageCount)
+	demoAccount = *acc
+	t.Logf("New account created!\n%#v", *acc)
 }
 
-/*
 func TestCreatePage(t *testing.T) {
+	content, err := ContentFormat(demoContent)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
 	newPage := &Page{
 		Title:      "Sample Page",
 		AuthorName: "Anonymous",
-		Content:    demoContent,
+		Content:    content,
 	}
 
-	demoPage, err = demoAccount.CreatePage(newPage, true)
+	page, err := demoAccount.CreatePage(newPage, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
-	t.Logf("%#v", demoPage)
+
+	demoPage = *page
+	t.Logf("%#v", *page)
 }
-*/
 
 func TestEditAccountInfo(t *testing.T) {
 	update := &Account{
@@ -45,77 +49,73 @@ func TestEditAccountInfo(t *testing.T) {
 
 	info, err := demoAccount.EditAccountInfo(update)
 	if err != nil {
+		t.Error(err.Error())
+	}
+
+	t.Logf("Account updated!\n%#v", info)
+}
+
+func TestEditPage(t *testing.T) {
+	content, err := ContentFormat(demoContent)
+	if err != nil {
 		t.Error(err)
 	}
 
-	t.Logf("Account updated!\nNew Short Name: %s\nNew Author Name: %s", info.ShortName, info.AuthorName)
-}
-
-/*
-func TestEditPage(t *testing.T) {
 	update := &Page{
 		Path:       demoPage.Path,
-		Title:      "",
+		Title:      "Sample Page",
 		AuthorName: "Anonymous",
-		Content:    demoContent,
+		Content:    content,
 	}
 
 	page, err := demoAccount.EditPage(update, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
-	t.Logf("%#v", page)
+	t.Logf("%#v", *page)
 }
-*/
 
 func TestGetAccountInfo(t *testing.T) {
 	account, err := demoAccount.GetAccountInfo([]string{"short_name", "page_count"})
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
 	t.Logf("Account info:\nShort Name: %s\nPage Count: %d", account.ShortName, account.PageCount)
 }
 
-/*
+func TestGetPageList(t *testing.T) {
+	pages, err := demoAccount.GetPageList(0, 3)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	t.Logf("Total %d pages\n%#v", pages.TotalCount, pages.Pages)
+}
+
 func TestGetPage(t *testing.T) {
 	page, err := GetPage(demoPage.Path, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
 	t.Logf("%#v", page)
 }
-*/
-
-func TestGetPageList(t *testing.T) {
-	list, err := demoAccount.GetPageList(0, 3)
-	if err != nil {
-		t.Error(err)
-	}
-
-	t.Logf("Total %d pages\nPages Raw: %#v", list.TotalCount, list.Pages)
-}
 
 func TestGetViews(t *testing.T) {
-	views, err := GetViews(demoPage.Path, 2016, 12, 0, -1)
+	views, err := GetViews("Sample-Page-12-15", 2016, 12, 0, -1)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
 	t.Logf("This page have %d views", views.Views)
 }
 
 func TestRevokeAccessToken(t *testing.T) {
-	account, err := CreateAccount("Sandbox", "Anonymous", "")
-	if err != nil {
-		t.Error(err)
-	}
+	t.Logf("Old Access Token: %s", demoAccount.AccessToken)
 
-	t.Logf("Old Access Token: %s", account.AccessToken)
-
-	token, err := account.RevokeAccessToken()
+	token, err := demoAccount.RevokeAccessToken()
 	if err != nil {
 		t.Error(token)
 	}

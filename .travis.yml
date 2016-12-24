@@ -6,3 +6,4 @@ go:
 
 install:
   - go get
+  - go get golang.org/x/net/html
