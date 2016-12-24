@@ -1,4 +1,4 @@
-# GoLang bindings for the Telegraph API
+# GoLang bindings for the Telegraph API [![discord](https://discordapp.com/api/guilds/208605007744860163/widget.png)](https://discord.gg/fM4QqmA)
 > This project is just to provide a wrapper around the API without any additional features.
 
 [![License](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](LICENSE.md)
@@ -6,7 +6,6 @@
 [![GoDoc](https://godoc.org/github.com/toby3d/telegraph?status.svg)](https://godoc.org/github.com/toby3d/telegraph)
 [![Go Report](https://goreportcard.com/badge/github.com/toby3d/telegraph)](https://goreportcard.com/report/github.com/toby3d/telegraph)
 [![Patreon](https://img.shields.io/badge/support-patreon-E66500.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
-[![discord](https://discordapp.com/api/guilds/208605007744860163/widget.png)](https://discord.gg/fM4QqmA)
 
 All [methods](http://telegra.ph/api#Available-methods) and [types](http://telegra.ph/api#Available-types) available! Yaay!
 
@@ -18,7 +17,7 @@ Import it in your code:
 `import "github.com/toby3d/telegraph"`
 
 ## Example
-This is an example of "quick start", which shows **how to create a new account** for future pages, as well as **creating a first simple page** with the name, picture and signature:
+This is an example of "quick start", which shows **how to create a new account** for future pages, as well as **creating a [first simple page](http://telegra.ph/My-awesome-page-12-24-9)** with the name, picture and signature:
 ```go
 package main
 
