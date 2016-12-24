@@ -167,7 +167,7 @@ func GetViews(path string, year int, month int, day int, hour int) (*PageViews, 
 				// will be returned.
 				args.Add("month", strconv.Itoa(month))
 
-				if year >= 2000 && year <= 2100 {
+				if year > 0 {
 					// Required if month is passed. If passed, the number of page views for the requested year
 					// will be returned.
 					args.Add("year", strconv.Itoa(year))
