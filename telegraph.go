@@ -82,7 +82,7 @@ type (
 		ImageURL string `json:"image_url"`
 
 		// Optional. Content of the page.
-		Content []NodeElement `json:"content"`
+		Content []Node `json:"content"`
 
 		// Number of page views for the page.
 		Views int `json:"views"`
@@ -115,7 +115,7 @@ type (
 		Attrs []html.Attribute `json:"attrs"`
 
 		// Optional. List of child nodes for the DOM element.
-		Children []NodeElement `json:"children"`
+		Children []Node `json:"children"`
 	}
 
 	// Response represents a response from the Telegram API with the result
@@ -131,19 +131,40 @@ type (
 )
 
 func request(dst []byte, url string, args *fasthttp.Args) (*Response, error) {
-	_, body, err := fasthttp.Post(dst, url, args)
+	/*
+		if args != nil {
+			url += "?" + args.String()
+		}
+
+		var req fasthttp.Request
+		req.Header.SetUserAgent("telegraph")
+		req.Header.SetMethod("POST")
+		req.Header.SetContentType("application/json; charset=utf-8")
+		req.SetRequestURI(url)
+		if dst != nil {
+			req.SetBody(dst)
+		}
+
+		var res fasthttp.Response
+		err := fasthttp.Do(&req, &res)
+		if err != nil {
+			return nil, err
+		}
+	*/
+
+	_, res, err := fasthttp.Post(dst, url, args)
 	if err != nil {
 		return nil, err
 	}
 
-	var resp Response
-	if err := json.Unmarshal(body, &resp); err != nil {
+	var tResp Response
+	if err := json.Unmarshal(res, &tResp); err != nil {
 		return nil, err
 	}
 
-	if !resp.Ok {
-		return nil, errors.New(resp.Error)
+	if !tResp.Ok {
+		return nil, errors.New(tResp.Error)
 	}
 
-	return &resp, nil
+	return &tResp, nil
 }

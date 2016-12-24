@@ -1,41 +1,98 @@
 package telegraph
 
-import "testing"
-
-var (
-	demoAccount = &Account{
-		AccessToken: "b968da509bb76866c35425099bc0989a5ec3b32997d55286c657e6994bbb",
-	}
-	demoPage = &Page{
-		Path: "Sample-Page-12-15",
-	}
-	demoContent = `<p>Hello, world!<p>`
+import (
+	"github.com/PuerkitoBio/goquery"
+	"golang.org/x/net/html"
+	"testing"
 )
 
-func TestCreateAccount(t *testing.T) {
-	newAccount, err := CreateAccount("Sandbox", "Anonymous", "")
+var (
+	demoAccount Account
+	demoPage    Page
+	demoContent = `<p>Hello, world!<p>`
+	demoURL     = "https://galyonk.in/whats-with-weak-aaa-sales-dcd7744ef205"
+)
+
+func parse(url string) ([]Node, error) {
+	dom, err := goquery.NewDocument(url)
 	if err != nil {
-		t.Error(err)
+		return nil, err
 	}
 
-	t.Logf("New account created!\nAccess Token: %s\nAuth URL: %s\nShort Name: %s\nAuthor Name: %s\nPage Count: %d", newAccount.AccessToken, newAccount.AuthURL, newAccount.ShortName, newAccount.AuthorName, newAccount.PageCount)
+	article := dom.Find("article").Children()
+
+	var content []Node
+	for i := range article.Nodes {
+		content = append(content, domToNode(article.Nodes[i]))
+	}
+
+	return content, nil
 }
 
-/*
-func TestCreatePage(t *testing.T) {
-	newPage := &Page{
-		Title:      "Sample Page",
-		AuthorName: "Anonymous",
-		Content:    demoContent,
+func domToNode(domNode *html.Node) interface{} {
+	if domNode.Type == html.TextNode && domNode.Data != "" {
+		return domNode.Data
 	}
 
-	demoPage, err = demoAccount.CreatePage(newPage, true)
+	if domNode.Type != html.ElementNode {
+		return nil
+	}
+
+	var nodeElement NodeElement
+
+	allowTags := map[string]bool{"a": true, "aside": true, "b": true, "blockquote": true, "br": true, "code": true, "em": true, "figcaption": true, "figure": true, "h3": true, "h4": true, "hr": true, "i": true, "iframe": true, "img": true, "li": true, "ol": true, "p": true, "pre": true, "s": true, "strong": true, "u": true, "ul": true, "video": true}
+	if _, ok := allowTags[domNode.Data]; ok {
+		nodeElement.Tag = domNode.Data
+
+		for i := range domNode.Attr {
+			attr := domNode.Attr[i]
+			if attr.Key == "href" || attr.Key == "src" {
+				if nodeElement.Attrs == nil {
+					break
+				}
+
+				nodeElement.Attrs[0].Val = attr.Val
+				// break
+			}
+		}
+	}
+
+	for child := domNode.FirstChild; child != nil; child = child.NextSibling {
+		// dlog.D(nodeElement.Children)
+		nodeElement.Children = append(nodeElement.Children, domToNode(child))
+	}
+
+	return nodeElement
+}
+
+func TestCreateAccount(t *testing.T) {
+	acc, err := CreateAccount("Sandbox", "Anonymous", "")
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+	}
+	demoAccount = *acc
+	t.Logf("New account created!\n%#v", acc)
+}
+
+func TestCreatePage(t *testing.T) {
+	content, err := parse("https://blog.toby3d.ru/five-sentences/")
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	newPage := &Page{
+		Path:       demoPage.Path,
+		Title:      "5 предложений",
+		AuthorName: "toby3d",
+		Content:    content,
+	}
+
+	demoPage, err := demoAccount.CreatePage(newPage, true)
+	if err != nil {
+		t.Error(err.Error())
 	}
 	t.Logf("%#v", demoPage)
 }
-*/
 
 func TestEditAccountInfo(t *testing.T) {
 	update := &Account{
@@ -45,77 +102,72 @@ func TestEditAccountInfo(t *testing.T) {
 
 	info, err := demoAccount.EditAccountInfo(update)
 	if err != nil {
+		t.Error(err.Error())
+	}
+
+	t.Logf("Account updated!\n%#v", info)
+}
+
+func TestEditPage(t *testing.T) {
+	content, err := parse(demoURL)
+	if err != nil {
 		t.Error(err)
 	}
 
-	t.Logf("Account updated!\nNew Short Name: %s\nNew Author Name: %s", info.ShortName, info.AuthorName)
-}
-
-/*
-func TestEditPage(t *testing.T) {
 	update := &Page{
-		Path:       demoPage.Path,
-		Title:      "",
-		AuthorName: "Anonymous",
-		Content:    demoContent,
+		Title:      "AAA Games",
+		AuthorName: "Galyonkin",
+		Content:    content,
 	}
 
 	page, err := demoAccount.EditPage(update, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
 	t.Logf("%#v", page)
 }
-*/
 
 func TestGetAccountInfo(t *testing.T) {
 	account, err := demoAccount.GetAccountInfo([]string{"short_name", "page_count"})
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
 	t.Logf("Account info:\nShort Name: %s\nPage Count: %d", account.ShortName, account.PageCount)
 }
 
-/*
-func TestGetPage(t *testing.T) {
-	page, err := GetPage(demoPage.Path, true)
+func TestGetPageList(t *testing.T) {
+	pages, err := demoAccount.GetPageList(0, 3)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+	}
+
+	t.Logf("Total %d pages\n%#v", pages.TotalCount, pages.Pages)
+}
+
+func TestGetPage(t *testing.T) {
+	page, err := GetPage("Sample-Page-12-15", true)
+	if err != nil {
+		t.Error(err.Error())
 	}
 
 	t.Logf("%#v", page)
 }
-*/
-
-func TestGetPageList(t *testing.T) {
-	list, err := demoAccount.GetPageList(0, 3)
-	if err != nil {
-		t.Error(err)
-	}
-
-	t.Logf("Total %d pages\nPages Raw: %#v", list.TotalCount, list.Pages)
-}
 
 func TestGetViews(t *testing.T) {
-	views, err := GetViews(demoPage.Path, 2016, 12, 0, -1)
+	views, err := GetViews("Sample-Page-12-15", 2016, 12, 0, -1)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
 	}
 
 	t.Logf("This page have %d views", views.Views)
 }
 
 func TestRevokeAccessToken(t *testing.T) {
-	account, err := CreateAccount("Sandbox", "Anonymous", "")
-	if err != nil {
-		t.Error(err)
-	}
+	t.Logf("Old Access Token: %s", demoAccount.AccessToken)
 
-	t.Logf("Old Access Token: %s", account.AccessToken)
-
-	token, err := account.RevokeAccessToken()
+	token, err := demoAccount.RevokeAccessToken()
 	if err != nil {
 		t.Error(token)
 	}
