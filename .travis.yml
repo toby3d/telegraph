@@ -6,3 +6,5 @@ go:
 
 install:
   - go get
+  - go get golang.org/x/net/html
+  - go get github.com/PuerkitoBio/goquery
