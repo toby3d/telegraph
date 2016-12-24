@@ -67,6 +67,7 @@ func TestCreateValidPage(t *testing.T) {
 	newPage := &Page{
 		Title:      "Sample Page",
 		AuthorName: "Anonymous",
+		AuthorURL:  "https://telegram.me/telegraph",
 		Content:    content,
 	}
 
@@ -214,7 +215,7 @@ func TestGetInvalidViewsByMonth(t *testing.T) {
 }
 
 func TestGetInvalidViewsByYear(t *testing.T) {
-	_, err := GetViews("Sample-Page-12-15", 1984, 12, 24, 23)
+	_, err := GetViews("Sample-Page-12-15", 2100, 12, 24, 23)
 	if err != nil {
 		t.Error(err.Error())
 	}
