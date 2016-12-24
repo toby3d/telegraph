@@ -150,30 +150,30 @@ func (account *Account) GetPageList(offset int, limit int) (*PageList, error) {
 
 // GetViews get the number of views for a Telegraph article. By default, the total number of page
 // views will be returned. Returns a PageViews object on success.
-func GetViews(path string, year int, month int, day int, hour int) (*PageViews, error) {
+func GetViews(path string, hour int, day int, month int, year int) (*PageViews, error) {
 	var args fasthttp.Args
 
 	if hour > -1 {
 		// If passed, the number of page views for the requested hour will be returned.
 		args.Add("hour", strconv.Itoa(hour))
+	}
 
-		if day > 0 {
-			// Required if hour is passed. If passed, the number of page views for the requested day
-			// will be returned.
-			args.Add("day", strconv.Itoa(day))
+	if day > 0 {
+		// Required if hour is passed. If passed, the number of page views for the requested
+		// day will be returned.
+		args.Add("day", strconv.Itoa(day))
+	}
 
-			if month > 0 {
-				// Required if day is passed. If passed, the number of page views for the requested month
-				// will be returned.
-				args.Add("month", strconv.Itoa(month))
+	if month > 0 {
+		// Required if day is passed. If passed, the number of page views for the
+		// requested month will be returned.
+		args.Add("month", strconv.Itoa(month))
+	}
 
-				if year > 0 {
-					// Required if month is passed. If passed, the number of page views for the requested year
-					// will be returned.
-					args.Add("year", strconv.Itoa(year))
-				}
-			}
-		}
+	if year > 0 {
+		// Required if month is passed. If passed, the number of page views for the
+		// requested year will be returned.
+		args.Add("year", strconv.Itoa(year))
 	}
 
 	url := fmt.Sprintf(PathEndpoint, "getViews", path)
