@@ -3,7 +3,6 @@ package telegraph
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kirillDanshin/dlog"
 	"github.com/valyala/fasthttp"
 	"strconv"
 )
@@ -18,12 +17,16 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 	// Required. Page title.
 	args.Add("title", page.Title)
 
-	// Author name, displayed below the article's title.
-	args.Add("author_name", page.AuthorName)
+	if page.AuthorName != "" {
+		// Author name, displayed below the article's title.
+		args.Add("author_name", page.AuthorName)
+	}
 
-	// Profile link, opened when users click on the author's name below the title. Can be any
-	// link, not necessarily to a Telegram profile or channel.
-	args.Add("author_url", page.AuthorURL)
+	if page.AuthorURL != "" {
+		// Profile link, opened when users click on the author's name below the title. Can be any
+		// link, not necessarily to a Telegram profile or channel.
+		args.Add("author_url", page.AuthorURL)
+	}
 
 	// If true, a content field will be returned in the Page object.
 	args.Add("return_content", strconv.FormatBool(returnContent))
@@ -37,8 +40,7 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 	args.Add("content", string(content))
 
 	url := fmt.Sprintf(APIEndpoint, "createPage")
-	dlog.Ln(url + "?" + args.String())
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -52,26 +54,30 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 }
 
 // EditPage edit an existing Telegraph page. On success, returns a Page object.
-func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error) {
+func (account *Account) EditPage(page *Page, returnContent bool) (*Page, error) {
 	var args fasthttp.Args
 
 	// Required. Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken)
 
 	// Required. Page title.
-	args.Add("title", update.Title)
+	args.Add("title", page.Title)
 
-	// Author name, displayed below the article's title.
-	args.Add("author_name", update.AuthorName)
+	if page.AuthorName != "" {
+		// Author name, displayed below the article's title.
+		args.Add("author_name", page.AuthorName)
+	}
 
-	// Profile link, opened when users click on the author's name below the title. Can be any
-	// link, not necessarily to a Telegram profile or channel.
-	args.Add("author_url", update.AuthorURL)
+	if page.AuthorURL != "" {
+		// Profile link, opened when users click on the author's name below the title. Can be any
+		// link, not necessarily to a Telegram profile or channel.
+		args.Add("author_url", page.AuthorURL)
+	}
 
 	// If true, a content field will be returned in the Page object.
 	args.Add("return_content", strconv.FormatBool(returnContent))
 
-	content, err := json.Marshal(update.Content)
+	content, err := json.Marshal(page.Content)
 	if err != nil {
 		return nil, err
 	}
@@ -79,8 +85,8 @@ func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error
 	// Required. Content of the page.
 	args.Add("content", string(content))
 
-	url := fmt.Sprintf(PathEndpoint, "editPage", update.Path)
-	body, err := request(nil, url, &args)
+	url := fmt.Sprintf(PathEndpoint, "editPage", page.Path)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +107,7 @@ func GetPage(path string, returnContent bool) (*Page, error) {
 	args.Add("return_content", strconv.FormatBool(returnContent))
 
 	url := fmt.Sprintf(PathEndpoint, "getPage", path)
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +135,7 @@ func (account *Account) GetPageList(offset int, limit int) (*PageList, error) {
 	args.Add("limit", strconv.Itoa(limit))
 
 	url := fmt.Sprintf(APIEndpoint, "getPageList")
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +177,7 @@ func GetViews(path string, year int, month int, day int, hour int) (*PageViews, 
 	}
 
 	url := fmt.Sprintf(PathEndpoint, "getViews", path)
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}

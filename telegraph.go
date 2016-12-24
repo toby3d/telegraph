@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/valyala/fasthttp"
-	"golang.org/x/net/html"
 )
 
 // Telegraph constants
@@ -112,7 +111,7 @@ type (
 		// Optional. Attributes of the DOM element. Key of object represents
 		// name of attribute, value represents value of attribute. Available
 		// attributes: href, src.
-		Attrs []html.Attribute `json:"attrs"`
+		Attrs map[string]string `json:"attrs"`
 
 		// Optional. List of child nodes for the DOM element.
 		Children []Node `json:"children"`
@@ -130,8 +129,8 @@ type (
 	}
 )
 
-func request(dst []byte, url string, args *fasthttp.Args) (*Response, error) {
-	_, res, err := fasthttp.Post(dst, url, args)
+func request(url string, args *fasthttp.Args) (*Response, error) {
+	_, res, err := fasthttp.Post(nil, url, args)
 	if err != nil {
 		return nil, err
 	}

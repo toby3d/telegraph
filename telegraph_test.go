@@ -1,85 +1,34 @@
 package telegraph
 
 import (
-	"github.com/PuerkitoBio/goquery"
-	"golang.org/x/net/html"
 	"testing"
 )
 
 var (
 	demoAccount Account
 	demoPage    Page
-	demoContent = `<p>Hello, world!<p>`
-	demoURL     = "https://galyonk.in/whats-with-weak-aaa-sales-dcd7744ef205"
+	demoContent = `<p>Hello, World!</p>`
 )
-
-func parse(url string) ([]Node, error) {
-	dom, err := goquery.NewDocument(url)
-	if err != nil {
-		return nil, err
-	}
-
-	article := dom.Find("article").Children()
-
-	var content []Node
-	for i := range article.Nodes {
-		content = append(content, domToNode(article.Nodes[i]))
-	}
-
-	return content, nil
-}
-
-func domToNode(domNode *html.Node) interface{} {
-	if domNode.Type == html.TextNode && domNode.Data != "" {
-		return domNode.Data
-	}
-
-	if domNode.Type != html.ElementNode {
-		return nil
-	}
-
-	var nodeElement NodeElement
-
-	allowTags := map[string]bool{"a": true, "aside": true, "b": true, "blockquote": true, "br": true, "code": true, "em": true, "figcaption": true, "figure": true, "h3": true, "h4": true, "hr": true, "i": true, "iframe": true, "img": true, "li": true, "ol": true, "p": true, "pre": true, "s": true, "strong": true, "u": true, "ul": true, "video": true}
-	if _, ok := allowTags[domNode.Data]; ok {
-		nodeElement.Tag = domNode.Data
-
-		for i := range domNode.Attr {
-			attr := domNode.Attr[i]
-			if attr.Key == "href" || attr.Key == "src" {
-				if nodeElement.Attrs == nil {
-					break
-				}
-				nodeElement.Attrs[0].Val = attr.Val
-			}
-		}
-	}
-
-	for child := domNode.FirstChild; child != nil; child = child.NextSibling {
-		nodeElement.Children = append(nodeElement.Children, domToNode(child))
-	}
-
-	return nodeElement
-}
 
 func TestCreateAccount(t *testing.T) {
 	acc, err := CreateAccount("Sandbox", "Anonymous", "")
 	if err != nil {
 		t.Error(err.Error())
 	}
+
 	demoAccount = *acc
-	t.Logf("New account created!\n%#v", acc)
+	t.Logf("New account created!\n%#v", *acc)
 }
 
 func TestCreatePage(t *testing.T) {
-	content, err := parse("https://blog.toby3d.ru/five-sentences/")
+	content, err := ContentFormat(demoContent)
 	if err != nil {
 		t.Error(err.Error())
 	}
 
 	newPage := &Page{
-		Title:      "5 sentences",
-		AuthorName: "toby3d",
+		Title:      "Sample Page",
+		AuthorName: "Anonymous",
 		Content:    content,
 	}
 
@@ -89,7 +38,7 @@ func TestCreatePage(t *testing.T) {
 	}
 
 	demoPage = *page
-	t.Logf("%#v", page)
+	t.Logf("%#v", *page)
 }
 
 func TestEditAccountInfo(t *testing.T) {
@@ -107,15 +56,15 @@ func TestEditAccountInfo(t *testing.T) {
 }
 
 func TestEditPage(t *testing.T) {
-	content, err := parse(demoURL)
+	content, err := ContentFormat(demoContent)
 	if err != nil {
 		t.Error(err)
 	}
 
 	update := &Page{
 		Path:       demoPage.Path,
-		Title:      "AAA Games",
-		AuthorName: "Galyonkin",
+		Title:      "Sample Page",
+		AuthorName: "Anonymous",
 		Content:    content,
 	}
 
@@ -124,7 +73,7 @@ func TestEditPage(t *testing.T) {
 		t.Error(err.Error())
 	}
 
-	t.Logf("%#v", page)
+	t.Logf("%#v", *page)
 }
 
 func TestGetAccountInfo(t *testing.T) {
@@ -146,7 +95,7 @@ func TestGetPageList(t *testing.T) {
 }
 
 func TestGetPage(t *testing.T) {
-	page, err := GetPage("Sample-Page-12-15", true)
+	page, err := GetPage(demoPage.Path, true)
 	if err != nil {
 		t.Error(err.Error())
 	}

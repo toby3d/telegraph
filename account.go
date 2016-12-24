@@ -27,7 +27,7 @@ func CreateAccount(shortName string, authorName string, authorURL string) (*Acco
 	args.Add("author_url", authorURL)
 
 	url := fmt.Sprintf(APIEndpoint, "createAccount")
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
 	args.Add("author_url", update.AuthorURL)
 
 	url := fmt.Sprintf(APIEndpoint, "editAccountInfo")
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (account *Account) GetAccountInfo(fields []string) (*Account, error) {
 	args.Add("fields", fmt.Sprintf(`["%s"]`, strings.Join(fields, `","`)))
 
 	url := fmt.Sprintf(APIEndpoint, "getAccountInfo")
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (account *Account) RevokeAccessToken() (*Account, error) {
 	args.Add("access_token", account.AccessToken)
 
 	url := fmt.Sprintf(APIEndpoint, "revokeAccessToken")
-	body, err := request(nil, url, &args)
+	body, err := request(url, &args)
 	if err != nil {
 		return nil, err
 	}
