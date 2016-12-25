@@ -39,7 +39,8 @@ var availableAttributes = map[string]bool{
 	"src":  true,
 }
 
-// ContentFormat transforms data to a DOM-based format to represent the content of the page.
+// ContentFormat transforms data to a DOM-based format to represent the
+// content of the page.
 func ContentFormat(data interface{}) ([]Node, error) {
 	var doc html.Node
 	switch dst := data.(type) {

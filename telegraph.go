@@ -1,3 +1,5 @@
+// Package telegraph has functions and types used for interacting with the
+// Telegraph API.
 package telegraph
 
 import (
@@ -19,14 +21,14 @@ const (
 type (
 	// Account represents a Telegraph account.
 	Account struct {
-		// Optional. Only returned by the createAccount and revokeAccessToken
-		// method. Access token of the Telegraph account.
-		AccessToken string `json:"access_token"`
+		// Only returned by the createAccount and revokeAccessToken method.
+		// Access token of the Telegraph account.
+		AccessToken string `json:"access_token"` // optional
 
-		// Optional. URL to authorize a browser on telegra.ph and connect it to
-		// a Telegraph account. This URL is valid for only one use and for 5
+		// URL to authorize a browser on telegra.ph and connect it to a
+		// Telegraph account. This URL is valid for only one use and for 5
 		// minutes only.
-		AuthURL string `json:"auth_url"`
+		AuthURL string `json:"auth_url"` // optional
 
 		// Account name, helps users with several accounts remember which they
 		// are currently using. Displayed to the user above the "Edit/Publish"
@@ -41,12 +43,12 @@ type (
 		// channel.
 		AuthorURL string `json:"author_url"`
 
-		// Optional. Number of pages belonging to the Telegraph account.
-		PageCount int `json:"page_count"`
+		// Number of pages belonging to the Telegraph account.
+		PageCount int `json:"page_count"` // optional
 	}
 
-	// PageList represents a list of Telegraph articles belonging to an account.
-	// Most recently created articles first.
+	// PageList represents a list of Telegraph articles belonging to an
+	// account. Most recently created articles first.
 	PageList struct {
 		// Total number of pages belonging to the target Telegraph account.
 		TotalCount int `json:"total_count"`
@@ -69,26 +71,26 @@ type (
 		// Description of the page.
 		Description string `json:"description"`
 
-		// Optional. Name of the author, displayed below the title.
-		AuthorName string `json:"author_name"`
+		// Name of the author, displayed below the title.
+		AuthorName string `json:"author_name"` // optional
 
-		// Optional. Profile link, opened when users click on the author's name
-		// below the title. Can be any link, not necessarily to a Telegram
-		// profile or channel.
-		AuthorURL string `json:"author_url"`
+		// Profile link, opened when users click on the author's name below
+		// the title. Can be any link, not necessarily to a Telegram profile
+		// or channel.
+		AuthorURL string `json:"author_url"` // optional
 
-		// Optional. Image URL of the page.
-		ImageURL string `json:"image_url"`
+		// Image URL of the page.
+		ImageURL string `json:"image_url"` // optional
 
-		// Optional. Content of the page.
-		Content []Node `json:"content"`
+		// Content of the page.
+		Content []Node `json:"content"` // optional
 
 		// Number of page views for the page.
 		Views int `json:"views"`
 
-		// Optional. Only returned if access_token passed. True, if the target
-		// Telegraph account can edit the page.
-		CanEdit bool `json:"can_edit"`
+		// Only returned if access_token passed. True, if the target Telegraph
+		// account can edit the page.
+		CanEdit bool `json:"can_edit"` // optional
 	}
 
 	// PageViews represents the number of page views for a Telegraph article.
@@ -103,25 +105,25 @@ type (
 
 	// NodeElement represents a DOM element node.
 	NodeElement struct {
-		// Name of the DOM element. Available tags: a, aside, b, blockquote, br,
-		// code, em, figcaption, figure, h3, h4, hr, i, iframe, img, li, ol, p,
-		// pre, s, strong, u, ul, video.
+		// Name of the DOM element. Available tags: a, aside, b, blockquote,
+		// br, code, em, figcaption, figure, h3, h4, hr, i, iframe, img, li,
+		// ol, p, pre, s, strong, u, ul, video.
 		Tag string `json:"tag"`
 
-		// Optional. Attributes of the DOM element. Key of object represents
-		// name of attribute, value represents value of attribute. Available
+		// Attributes of the DOM element. Key of object represents name of
+		// attribute, value represents value of attribute. Available
 		// attributes: href, src.
-		Attrs map[string]string `json:"attrs"`
+		Attrs map[string]string `json:"attrs"` // optional
 
-		// Optional. List of child nodes for the DOM element.
-		Children []Node `json:"children"`
+		// List of child nodes for the DOM element.
+		Children []Node `json:"children"` // optional
 	}
 
 	// Response represents a response from the Telegram API with the result
-	// stored raw. If ok equals true, the request was successful, and the result
-	// of the query can be found in the result field. In case of an unsuccessful
-	// request, ok equals false, and the error is explained in the error field
-	// (e.g. SHORT_NAME_REQUIRED).
+	// stored raw. If ok equals true, the request was successful, and the
+	// result of the query can be found in the result field. In case of an
+	// unsuccessful request, ok equals false, and the error is explained in
+	// the error field (e.g. SHORT_NAME_REQUIRED).
 	Response struct {
 		Ok     bool            `json:"ok"`
 		Error  string          `json:"error"`
