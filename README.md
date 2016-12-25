@@ -17,7 +17,7 @@ Import it in your code:
 `import "github.com/toby3d/telegraph"`
 
 ## Example
-This is an example of "quick start", which shows **how to create a new account** for future pages, as well as **creating a [first simple page](http://telegra.ph/My-awesome-page-12-24-9)** with the name, picture and signature:
+This is an example of "quick start", which shows **how to create a new account** for future pages, as well as **creating a [first simple page](http://telegra.ph/My-super-awesome-page-12-25)** with text, picture, video and signature:
 ```go
 package main
 
@@ -26,10 +26,10 @@ import (
     "log"
 )
 
-// Example content. Not abuse tags, okay? Be easy, bro.
-const data = `<figure><img src="http://telegra.ph/file/6a5b15e7eb4d7329ca7af.jpg"/>
-    <figcaption>Cat turns the wheel? Pretty weird... But cute.</figcaption></figure>
-    <p><i>Hello</i>, my name is <b>Page</b>, <u>look at me</u>!</p>`
+// Example content. Be sure to wrap every media in a <figure> tag, okay? Be easy, bro.
+const data = `<figure><img src="/file/6a5b15e7eb4d7329ca7af.jpg"/></figure><p><i>Hello</i>, my name is
+<b>Page</b>, <u>look at me</u>!</p><figure><iframe src="https://youtu.be/fzQ6gRAEoy0"></iframe>
+<figcaption>Yes, you can embed youtube, vimeo and twitter widgets too!</figcaption></figure>`
 
 func main() {
     // Create new Telegraph account. Author name/link can be epmty.
@@ -47,7 +47,7 @@ func main() {
     content, _ := telegraph.ContentFormat(data)
     
     newPage := &telegraph.Page{
-        Title:   "My awesome page",
+        Title:   "My super-awesome page",
         Content: content,
 
         // Not necessarily, but, hey, it's just an example.
