@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/toby3d/telegraph.svg)](https://travis-ci.org/toby3d/telegraph)
 [![GoDoc](https://godoc.org/github.com/toby3d/telegraph?status.svg)](https://godoc.org/github.com/toby3d/telegraph)
 [![Go Report](https://goreportcard.com/badge/github.com/toby3d/telegraph)](https://goreportcard.com/report/github.com/toby3d/telegraph)
-[![Patreon](https://img.shields.io/badge/support-patreon-E66500.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
+[![Patreon](https://img.shields.io/badge/support-patreon-E6461A.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
 
 All [methods](http://telegra.ph/api#Available-methods) and [types](http://telegra.ph/api#Available-types) available! Yaay!
 

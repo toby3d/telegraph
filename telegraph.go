@@ -5,6 +5,7 @@ package telegraph
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/valyala/fasthttp"
 )
 
@@ -132,13 +133,13 @@ type (
 )
 
 func request(url string, args *fasthttp.Args) (*Response, error) {
-	_, res, err := fasthttp.Post(nil, url, args)
+	_, resp, err := fasthttp.Post(nil, url, args)
 	if err != nil {
 		return nil, err
 	}
 
 	var tResp Response
-	if err := json.Unmarshal(res, &tResp); err != nil {
+	if err := json.Unmarshal(resp, &tResp); err != nil {
 		return nil, err
 	}
 

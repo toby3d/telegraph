@@ -29,7 +29,7 @@ func TestCreateValidAccount(t *testing.T) {
 	}
 
 	demoAccount = *account
-	t.Logf("New account created!\n%#v", *account)
+	t.Logf("New account created!")
 }
 
 func TestCreateValidPage(t *testing.T) {
@@ -61,12 +61,12 @@ func TestEditValidAccountInfo(t *testing.T) {
 		AuthorURL:  "https://telegram.me/telegraph",
 	}
 
-	info, err := demoAccount.EditAccountInfo(update)
+	_, err := demoAccount.EditAccountInfo(update)
 	if err != nil {
 		t.Error(err)
 	}
 
-	t.Logf("Account updated!\n%#v", *info)
+	t.Logf("Account updated!")
 }
 
 func TestEditValidPage(t *testing.T) {
@@ -96,7 +96,7 @@ func TestGetValidAccountInfo(t *testing.T) {
 		t.Error(err)
 	}
 
-	t.Logf("Account info:\n%#v", *account)
+	t.Logf("%s create %d pages", account.ShortName, account.PageCount)
 }
 
 func TestGetValidPageList(t *testing.T) {
@@ -127,12 +127,10 @@ func TestGetValidViews(t *testing.T) {
 }
 
 func TestRevokeAccessToken(t *testing.T) {
-	t.Logf("Old Access Token: %s", demoAccount.AccessToken)
-
-	token, err := demoAccount.RevokeAccessToken()
+	_, err := demoAccount.RevokeAccessToken()
 	if err != nil {
 		t.Error(err)
 	}
 
-	t.Logf("New Access Token: %s", token.AccessToken)
+	t.Logf("New Access Token set!")
 }
