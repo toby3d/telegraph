@@ -3,8 +3,9 @@ package telegraph
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/valyala/fasthttp"
 	"strconv"
+
+	"github.com/valyala/fasthttp"
 )
 
 // CreatePage create a new Telegraph page. On success, returns a Page object.

@@ -3,8 +3,9 @@ package telegraph
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/valyala/fasthttp"
 	"strings"
+
+	"github.com/valyala/fasthttp"
 )
 
 // CreateAccount create a new Telegraph account. Most users only need one
