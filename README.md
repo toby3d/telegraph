@@ -7,7 +7,7 @@
 [![Go Report](https://goreportcard.com/badge/github.com/toby3d/telegraph)](https://goreportcard.com/report/github.com/toby3d/telegraph)
 [![Patreon](https://img.shields.io/badge/support-patreon-E6461A.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
 
-All [methods](http://telegra.ph/api#Available-methods) and [types](http://telegra.ph/api#Available-types) available! Yaay!
+All [methods](https://toby3d.github.io/telegraph/#available-methods) and [types](https://toby3d.github.io/telegraph/#available-types) available and this library (possibly) is ready for use in production. Yaay!
 
 ## Start using telegraph
 Download and install it:  
@@ -57,9 +57,9 @@ func main() {
 
     if page, err := acc.CreatePage(newPage, false); err != nil {
         log.Print(err.Error())
-    } else {
-        log.Println("Kaboom! Page created, look what happened:", page.URL)
     }
+	
+    log.Println("Kaboom! Page created, look what happened:", page.URL)
 }
 ```
 
