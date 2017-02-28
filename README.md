@@ -63,10 +63,6 @@ func main() {
 }
 ```
 
-## Requirements
-- [fasthttp](https://github.com/valyala/fasthttp)
-- [net/html](https://golang.org/x/net/html)
-
 ## Documentation
 - [Contributors](CONTRIBUTORS.md) and Patrons!
 - [License](LICENSE.md)
