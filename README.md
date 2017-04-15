@@ -37,7 +37,7 @@ func main() {
     acc, err := telegraph.CreateAccount(
         "toby3d", // required for assign all new pages (invisible for others)
         "Maxim Lebedev",
-        "https://telegram.me/toby3d",
+        "https://t.me/toby3d",
     )
     if err != nil {
         log.Fatalln(err.Error())
