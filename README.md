@@ -2,19 +2,19 @@
 > This project is just to provide a wrapper around the API without any additional features.
 
 [![License](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](LICENSE.md)
-[![Build Status](https://travis-ci.org/toby3d/telegraph.svg)](https://travis-ci.org/toby3d/telegraph)
-[![GoDoc](https://godoc.org/github.com/toby3d/telegraph?status.svg)](https://godoc.org/github.com/toby3d/telegraph)
-[![Go Report](https://goreportcard.com/badge/github.com/toby3d/telegraph)](https://goreportcard.com/report/github.com/toby3d/telegraph)
+[![Build Status](https://travis-ci.org/toby3d/go-telegraph.svg)](https://travis-ci.org/toby3d/go-telegraph)
+[![GoDoc](https://godoc.org/github.com/toby3d/go-telegraph?status.svg)](https://godoc.org/github.com/toby3d/go-telegraph)
+[![Go Report](https://goreportcard.com/badge/github.com/toby3d/go-telegraph)](https://goreportcard.com/report/github.com/toby3d/go-telegraph)
 [![Patreon](https://img.shields.io/badge/support-patreon-E6461A.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
 
-All [methods](https://toby3d.github.io/telegraph/#available-methods) and [types](https://toby3d.github.io/telegraph/#available-types) available and this library (possibly) is ready for use in production. Yaay!
+All [methods](https://toby3d.github.io/go-telegraph/#available-methods) and [types](https://toby3d.github.io/go-telegraph/#available-types) available and this library (possibly) is ready for use in production. Yaay!
 
 ## Start using telegraph
 Download and install it:  
-`$ go get -u github.com/toby3d/telegraph`
+`$ go get -u github.com/toby3d/go-telegraph`
 
 Import it in your code:  
-`import "github.com/toby3d/telegraph"`
+`import "github.com/toby3d/go-telegraph"`
 
 ## Example
 This is an example of "quick start", which shows **how to create a new account** for future pages, as well as **creating a [first simple page](http://telegra.ph/My-super-awesome-page-12-25)** with text, picture, video and signature:
@@ -22,7 +22,7 @@ This is an example of "quick start", which shows **how to create a new account**
 package main
 
 import (
-    "github.com/toby3d/telegraph"
+    "github.com/toby3d/go-telegraph"
     "log"
 )
 
@@ -66,4 +66,4 @@ func main() {
 ## Documentation
 - [Contributors](CONTRIBUTORS.md) and Patrons!
 - [License](LICENSE.md)
-- [ToDo](https://github.com/toby3d/telegraph/projects/1)
+- [ToDo](https://github.com/toby3d/go-telegraph/projects/1)
