@@ -69,4 +69,3 @@ func main() {
 ## Documentation
 - [Contributors](CONTRIBUTORS.md) and Patrons!
 - [License](LICENSE.md)
-- [ToDo](https://github.com/toby3d/go-telegraph/projects/1)
