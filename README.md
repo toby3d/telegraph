@@ -40,11 +40,14 @@ func main() {
         "https://telegram.me/toby3d",
     )
     if err != nil {
-        log.Fatal(err.Error())
+        log.Fatalln(err.Error())
     }
 
     // Boom!.. And your text will be understandable for Telegraph. MAGIC.
-    content, _ := telegraph.ContentFormat(data)
+    content, err := telegraph.ContentFormat(data)
+    if err != nil {
+        log.Fatalln(err.Error())
+    }
     
     newPage := &telegraph.Page{
         Title:   "My super-awesome page",
@@ -56,7 +59,7 @@ func main() {
     }
 
     if page, err := acc.CreatePage(newPage, false); err != nil {
-        log.Print(err.Error())
+        log.Fatalln(err.Error())
     }
 	
     log.Println("Kaboom! Page created, look what happened:", page.URL)
