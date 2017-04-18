@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/valyala/fasthttp"
+	http "github.com/valyala/fasthttp"
 )
 
 // CreatePage create a new Telegraph page. On success, returns a Page object.
 func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
@@ -58,7 +58,7 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 // EditPage edit an existing Telegraph page. On success, returns a Page
 // object.
 func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
@@ -105,7 +105,7 @@ func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error
 
 // GetPage get a Telegraph page. Returns a Page object on success.
 func GetPage(path string, returnContent bool) (*Page, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// If true, content field will be returned in Page object.
 	args.Add("return_content", strconv.FormatBool(returnContent))
@@ -127,7 +127,7 @@ func GetPage(path string, returnContent bool) (*Page, error) {
 // GetPageList get a list of pages belonging to a Telegraph account. Returns
 // a PageList object, sorted by most recently created pages first.
 func (account *Account) GetPageList(offset int, limit int) (*PageList, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
@@ -156,7 +156,7 @@ func (account *Account) GetPageList(offset int, limit int) (*PageList, error) {
 // total number of page views will be returned. Returns a PageViews object
 // on success.
 func GetViews(path string, hour int, day int, month int, year int) (*PageViews, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	if hour > -1 {
 		// If passed, the number of page views for the requested hour will

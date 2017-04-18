@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"golang.org/x/net/html"
+	html "golang.org/x/net/html"
 )
 
 var availableTags = map[string]bool{
