@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/valyala/fasthttp"
+	http "github.com/valyala/fasthttp"
 )
 
 // Telegraph constants
@@ -132,8 +132,8 @@ type (
 	}
 )
 
-func request(url string, args *fasthttp.Args) (*Response, error) {
-	_, resp, err := fasthttp.Post(nil, url, args)
+func request(url string, args *http.Args) (*Response, error) {
+	_, resp, err := http.Post(nil, url, args)
 	if err != nil {
 		return nil, err
 	}

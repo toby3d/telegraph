@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/valyala/fasthttp"
+	http "github.com/valyala/fasthttp"
 )
 
 // CreateAccount create a new Telegraph account. Most users only need one
@@ -14,7 +14,7 @@ import (
 // channels. On success, returns an Account object with the regular fields and
 // an additional access_token field.
 func CreateAccount(shortName string, authorName string, authorURL string) (*Account, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Account name, helps users with several accounts remember which they are
 	// currently using. Displayed to the user above the "Edit/Publish" button
@@ -47,7 +47,7 @@ func CreateAccount(shortName string, authorName string, authorURL string) (*Acco
 // parameters that you want to edit. On success, returns an Account object
 // with the default fields.
 func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
@@ -80,7 +80,7 @@ func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
 // GetAccountInfo get information about a Telegraph account. Returns an
 // Account object on success.
 func (account *Account) GetAccountInfo(fields []string) (*Account, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
@@ -108,7 +108,7 @@ func (account *Account) GetAccountInfo(fields []string) (*Account, error) {
 // to believe the token was compromised. On success, returns an Account object
 // with new access_token and auth_url fields.
 func (account *Account) RevokeAccessToken() (*Account, error) {
-	var args fasthttp.Args
+	var args http.Args
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
