@@ -22,8 +22,9 @@ This is an example of "quick start", which shows **how to create a new account**
 package main
 
 import (
-    "github.com/toby3d/go-telegraph"
     "log"
+
+    "github.com/toby3d/go-telegraph"
 )
 
 // Example content. Be sure to wrap every media in a <figure> tag, okay? Be easy, bro.
