@@ -106,7 +106,7 @@ func domToNode(domNode *html.Node) interface{} {
 	return nodeElement
 }
 
-func parseEmbed(service string, url string) map[string]string {
+func parseEmbed(service, url string) map[string]string {
 	return map[string]string{
 		"src":               fmt.Sprint("/embed/", service, "?url=", url),
 		"width":             "640",

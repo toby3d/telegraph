@@ -126,7 +126,7 @@ func GetPage(path string, returnContent bool) (*Page, error) {
 
 // GetPageList get a list of pages belonging to a Telegraph account. Returns
 // a PageList object, sorted by most recently created pages first.
-func (account *Account) GetPageList(offset int, limit int) (*PageList, error) {
+func (account *Account) GetPageList(offset, limit int) (*PageList, error) {
 	var args http.Args
 
 	// Access token of the Telegraph account.
@@ -155,7 +155,7 @@ func (account *Account) GetPageList(offset int, limit int) (*PageList, error) {
 // GetViews get the number of views for a Telegraph article. By default, the
 // total number of page views will be returned. Returns a PageViews object
 // on success.
-func GetViews(path string, hour int, day int, month int, year int) (*PageViews, error) {
+func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
 	var args http.Args
 
 	if hour > -1 {

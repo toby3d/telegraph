@@ -13,7 +13,7 @@ import (
 // to keep individual author names and profile links for each of their
 // channels. On success, returns an Account object with the regular fields and
 // an additional access_token field.
-func CreateAccount(shortName string, authorName string, authorURL string) (*Account, error) {
+func CreateAccount(shortName, authorName, authorURL string) (*Account, error) {
 	var args http.Args
 
 	// Account name, helps users with several accounts remember which they are
