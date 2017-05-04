@@ -79,7 +79,7 @@ func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
 
 // GetAccountInfo get information about a Telegraph account. Returns an
 // Account object on success.
-func (account *Account) GetAccountInfo(fields []string) (*Account, error) {
+func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
 	var args http.Args
 
 	// Access token of the Telegraph account.
