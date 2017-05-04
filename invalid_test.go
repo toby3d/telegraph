@@ -53,7 +53,7 @@ func TestEditInvalidPage(t *testing.T) {
 
 func TestGetInvalidAccountInfo(t *testing.T) {
 	var account Account
-	_, err := account.GetAccountInfo([]string{"short_name", "page_count"})
+	_, err := account.GetAccountInfo("short_name", "page_count")
 	if err == nil {
 		t.Error()
 	}
