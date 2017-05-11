@@ -1,10 +1,10 @@
 package telegraph
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
+	json "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
 

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 
+	ffjson "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
 
@@ -133,19 +134,19 @@ type (
 )
 
 func request(url string, args *http.Args) (*Response, error) {
-	_, resp, err := http.Post(nil, url, args)
+	_, body, err := http.Post(nil, url, args)
 	if err != nil {
 		return nil, err
 	}
 
-	var tResp Response
-	if err := json.Unmarshal(resp, &tResp); err != nil {
+	var resp Response
+	if err := ffjson.Unmarshal(body, &resp); err != nil {
 		return nil, err
 	}
 
-	if !tResp.Ok {
-		return nil, errors.New(tResp.Error)
+	if !resp.Ok {
+		return nil, errors.New(resp.Error)
 	}
 
-	return &tResp, nil
+	return &resp, nil
 }
