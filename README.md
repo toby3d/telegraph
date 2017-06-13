@@ -6,6 +6,7 @@
 [![GoDoc](https://godoc.org/github.com/toby3d/go-telegraph?status.svg)](https://godoc.org/github.com/toby3d/go-telegraph)
 [![Go Report](https://goreportcard.com/badge/github.com/toby3d/go-telegraph)](https://goreportcard.com/report/github.com/toby3d/go-telegraph)
 [![Patreon](https://img.shields.io/badge/support-patreon-E6461A.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
+[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/avelino/awesome-go)
 
 All [methods](https://toby3d.github.io/go-telegraph/#available-methods) and [types](https://toby3d.github.io/go-telegraph/#available-types) available and this library (possibly) is ready for use in production. Yaay!
 
@@ -68,5 +69,5 @@ func main() {
 ```
 
 ## Documentation
-- [Contributors](CONTRIBUTORS.md) and Patrons!
+- [Contributors](CONTRIBUTORS.md)
 - [License](LICENSE.md)
