@@ -25,32 +25,45 @@ package main
 import (
     "log"
 
-    "github.com/toby3d/go-telegraph"
+    telegraph "github.com/toby3d/go-telegraph"
 )
 
-// Example content. Be sure to wrap every media in a <figure> tag, okay? Be easy, bro.
-const data = `<figure><img src="/file/6a5b15e7eb4d7329ca7af.jpg"/></figure><p><i>Hello</i>, my name is
-<b>Page</b>, <u>look at me</u>!</p><figure><iframe src="https://youtu.be/fzQ6gRAEoy0"></iframe>
-<figcaption>Yes, you can embed youtube, vimeo and twitter widgets too!</figcaption></figure>`
+// Example content. Be sure to wrap every media in a <figure> tag, okay?
+// Be easy, bro.
+const data = `
+    <figure>
+        <img src="/file/6a5b15e7eb4d7329ca7af.jpg"/>
+    </figure>
+    <p><i>Hello</i>, my name is <b>Page</b>, <u>look at me</u>!</p>
+    <figure>
+        <iframe src="https://youtu.be/fzQ6gRAEoy0"></iframe>
+        <figcaption>
+            Yes, you can embed youtube, vimeo and twitter widgets too!
+        </figcaption>
+    </figure>
+`
+
+func checkError(err error) {
+    if err != nil {
+        log.Fatalln(err.Error())
+    }
+}
 
 func main() {
     // Create new Telegraph account. Author name/link can be epmty.
     // So secure. Much anonymously. Wow.
-    acc, err := telegraph.CreateAccount(
-        "toby3d", // required for assign all new pages (invisible for others)
-        "Maxim Lebedev",
-        "https://t.me/toby3d",
-    )
-    if err != nil {
-        log.Fatalln(err.Error())
+    newAccount := &telegraph.Account{
+        ShortName:  "toby3d", // required
+        AuthorName: "Maxim Lebedev",
+        AuthorURL:  "https://t.me/toby3d",
     }
+    acc, err := telegraph.CreateAccount(newAccount)
+    checkError(err)
 
     // Boom!.. And your text will be understandable for Telegraph. MAGIC.
     content, err := telegraph.ContentFormat(data)
-    if err != nil {
-        log.Fatalln(err.Error())
-    }
-    
+    checkError(err)
+
     newPage := &telegraph.Page{
         Title:   "My super-awesome page",
         Content: content,
@@ -60,14 +73,14 @@ func main() {
         AuthorURL:  acc.AuthorURL,
     }
 
-    if page, err := acc.CreatePage(newPage, false); err != nil {
-        log.Fatalln(err.Error())
-    }
-	
+    page, err := acc.CreatePage(newPage, false)
+    checkError(err)
+
     log.Println("Kaboom! Page created, look what happened:", page.URL)
 }
 ```
 
-## Documentation
-- [Contributors](CONTRIBUTORS.md)
-- [License](LICENSE.md)
+## Need help?
+- [Open new issue](https://github.com/toby3d/go-telegraph/issues/new) - Native solution
+- [Discuss in Discord](https://discord.gg/QJ8z5BN) - Most preferred option
+- [Ask me in Telegram](https://t.me/toby3d) - Less preferred option (please don't spam)
