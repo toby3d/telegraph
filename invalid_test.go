@@ -11,7 +11,8 @@ func TestContentFormatByWTF(t *testing.T) {
 }
 
 func TestCreateInvalidAccount(t *testing.T) {
-	_, err := CreateAccount("", "", "")
+	var account Account
+	_, err := CreateAccount(&account)
 	if err == nil {
 		t.Error()
 	}

@@ -23,7 +23,12 @@ func TestContentFormatByBytes(t *testing.T) {
 }
 
 func TestCreateValidAccount(t *testing.T) {
-	account, err := CreateAccount("Sandbox", "Anonymous", "")
+	newAccount := &Account{
+		ShortName:  "Sandbox",
+		AuthorName: "Anonymous",
+	}
+
+	account, err := CreateAccount(newAccount)
 	if err != nil {
 		t.Error(err)
 	}
