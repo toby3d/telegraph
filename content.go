@@ -80,11 +80,11 @@ func domToNode(domNode *html.Node) interface{} {
 
 	var nodeElement NodeElement
 	if _, ok := availableTags[strings.ToLower(domNode.Data)]; ok {
-		nodeElement.Tag = strings.ToLower(domNode.Data)
+		nodeElement.Tag = domNode.Data
 		for _, attr := range domNode.Attr {
 			if _, ok := availableAttributes[strings.ToLower(attr.Key)]; ok {
 				nodeElement.Attrs = map[string]string{
-					strings.ToLower(attr.Key): strings.ToLower(attr.Val),
+					attr.Key: attr.Val,
 				}
 			}
 		}
