@@ -81,6 +81,5 @@ func main() {
 ```
 
 ## Need help?
-- [Open new issue](https://github.com/toby3d/go-telegraph/issues/new) - Native solution
-- [Discuss in Discord](https://discord.gg/QJ8z5BN) - Most preferred option
-- [Ask me in Telegram](https://t.me/toby3d) - Less preferred option (please don't spam)
+- [Open new issue](https://github.com/toby3d/go-telegraph/issues/new)
+- [Discuss in Discord](https://discord.gg/QJ8z5BN)
