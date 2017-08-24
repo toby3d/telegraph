@@ -36,7 +36,7 @@ func CreateAccount(account *Account) (*Account, error) {
 	}
 
 	var resp Account
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -70,7 +70,7 @@ func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
 	}
 
 	var resp Account
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -87,7 +87,7 @@ func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
 
 	// List of account fields to return. Available fields: short_name,
 	// author_name, author_url, auth_url, page_count.
-	args.Add("fields", fmt.Sprintf(`["%s"]`, strings.Join(fields, `","`)))
+	args.Add("fields", fmt.Sprint(`["`, strings.Join(fields, `","`), `"]`))
 
 	url := fmt.Sprintf(APIEndpoint, "getAccountInfo")
 	body, err := request(url, &args)
@@ -96,7 +96,7 @@ func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
 	}
 
 	var resp Account
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -120,7 +120,7 @@ func (account *Account) RevokeAccessToken() (*Account, error) {
 	}
 
 	var resp Account
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 

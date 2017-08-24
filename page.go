@@ -48,7 +48,7 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 	}
 
 	var resp Page
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -96,7 +96,7 @@ func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error
 	}
 
 	var resp Page
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -117,7 +117,7 @@ func GetPage(path string, returnContent bool) (*Page, error) {
 	}
 
 	var resp Page
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -145,7 +145,7 @@ func (account *Account) GetPageList(offset, limit int) (*PageList, error) {
 	}
 
 	var resp PageList
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
@@ -189,7 +189,7 @@ func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
 	}
 
 	var resp PageViews
-	if err := json.Unmarshal(body.Result, &resp); err != nil {
+	if err := json.Unmarshal(*body.Result, &resp); err != nil {
 		return nil, err
 	}
 
