@@ -45,9 +45,7 @@ func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
 	}
 
 	var resp PageViews
-	if err := json.Unmarshal(*body.Result, &resp); err != nil {
-		return nil, err
-	}
+	err = json.Unmarshal(*body.Result, &resp)
 
-	return &resp, nil
+	return &resp, err
 }

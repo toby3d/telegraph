@@ -26,5 +26,5 @@ func (account *Account) RevokeAccessToken() (*Account, error) {
 	var resp Account
 	err = json.Unmarshal(*body.Result, &resp)
 
-	return &resp, nil
+	return &resp, err
 }
