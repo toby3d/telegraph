@@ -9,7 +9,6 @@ import (
 	http "github.com/valyala/fasthttp"
 )
 
-// Telegraph constants
 const (
 	// APIEndpoint should be presented in this for all queries to the Telegraph
 	// API must be served over HTTPS.
