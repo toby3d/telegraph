@@ -5,41 +5,7 @@ import (
 	"errors"
 	"strings"
 
-	html "golang.org/x/net/html"
-)
-
-var (
-	availableTags = map[string]bool{
-		"a":          true,
-		"aside":      true,
-		"b":          true,
-		"blockquote": true,
-		"br":         true,
-		"code":       true,
-		"em":         true,
-		"figcaption": true,
-		"figure":     true,
-		"h3":         true,
-		"h4":         true,
-		"hr":         true,
-		"i":          true,
-		"iframe":     true,
-		"img":        true,
-		"li":         true,
-		"ol":         true,
-		"p":          true,
-		"pre":        true,
-		"s":          true,
-		"strong":     true,
-		"u":          true,
-		"ul":         true,
-		"video":      true,
-	}
-
-	availableAttributes = map[string]bool{
-		"href": true,
-		"src":  true,
-	}
+	"golang.org/x/net/html"
 )
 
 // ContentFormat transforms data to a DOM-based format to represent the
@@ -79,12 +45,18 @@ func domToNode(domNode *html.Node) interface{} {
 	}
 
 	var nodeElement NodeElement
-	if _, ok := availableTags[strings.ToLower(domNode.Data)]; ok {
+	switch strings.ToLower(domNode.Data) {
+	case "a", "aside", "b", "blockquote", "br", "code", "em", "figcaption", "figure", "h3", "h4", "hr", "i", "iframe", "img", "li", "ol", "p", "pre", "s", "strong", "u", "ul", "video":
 		nodeElement.Tag = domNode.Data
 
-		for _, attr := range domNode.Attr {
-			if _, ok := availableAttributes[strings.ToLower(attr.Key)]; ok {
-				nodeElement.Attrs = map[string]string{attr.Key: attr.Val}
+		for i := range domNode.Attr {
+			switch strings.ToLower(domNode.Attr[i].Key) {
+			case "href", "src":
+				nodeElement.Attrs = map[string]string{
+					domNode.Attr[i].Key: domNode.Attr[i].Val,
+				}
+			default:
+				continue
 			}
 		}
 	}
