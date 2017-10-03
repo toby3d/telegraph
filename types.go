@@ -12,7 +12,7 @@ type (
 		// URL to authorize a browser on telegra.ph and connect it to a
 		// Telegraph account. This URL is valid for only one use and for 5
 		// minutes only.
-		AuthURL string `json:"auth_url"` // optional
+		AuthURL string `json:"auth_url,omitempty"` // optional
 
 		// Account name, helps users with several accounts remember which they
 		// are currently using. Displayed to the user above the "Edit/Publish"
@@ -28,7 +28,7 @@ type (
 		AuthorURL string `json:"author_url"`
 
 		// Number of pages belonging to the Telegraph account.
-		PageCount int `json:"page_count"` // optional
+		PageCount int `json:"page_count,omitempty"` // optional
 	}
 
 	// PageList represents a list of Telegraph articles belonging to an
@@ -56,25 +56,25 @@ type (
 		Description string `json:"description"`
 
 		// Name of the author, displayed below the title.
-		AuthorName string `json:"author_name"` // optional
+		AuthorName string `json:"author_name,omitempty"` // optional
 
 		// Profile link, opened when users click on the author's name below
 		// the title. Can be any link, not necessarily to a Telegram profile
 		// or channel.
-		AuthorURL string `json:"author_url"` // optional
+		AuthorURL string `json:"author_url,omitempty"` // optional
 
 		// Image URL of the page.
-		ImageURL string `json:"image_url"` // optional
+		ImageURL string `json:"image_url,omitempty"` // optional
 
 		// Content of the page.
-		Content []Node `json:"content"` // optional
+		Content []Node `json:"content,omitempty"` // optional
 
 		// Number of page views for the page.
 		Views int `json:"views"`
 
 		// Only returned if access_token passed. True, if the target Telegraph
 		// account can edit the page.
-		CanEdit bool `json:"can_edit"` // optional
+		CanEdit bool `json:"can_edit,omitempty"` // optional
 	}
 
 	// PageViews represents the number of page views for a Telegraph article.
@@ -97,10 +97,10 @@ type (
 		// Attributes of the DOM element. Key of object represents name of
 		// attribute, value represents value of attribute. Available
 		// attributes: href, src.
-		Attrs map[string]string `json:"attrs"` // optional
+		Attrs map[string]string `json:"attrs,omitempty"` // optional
 
 		// List of child nodes for the DOM element.
-		Children []Node `json:"children"` // optional
+		Children []Node `json:"children,omitempty"` // optional
 	}
 
 	// Response represents a response from the Telegram API with the result
