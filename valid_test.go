@@ -2,140 +2,178 @@ package telegraph
 
 import "testing"
 
-var (
-	demoAccount Account
-	demoPage    Page
-	demoContent = `<p>Hello, World!</p>`
+const (
+	validTitle         = "Testing"
+	validShortName     = "Sandbox"
+	validAuthorName    = "Anonymous"
+	validNewAuthorName = "Gopher"
+	validAuthorURL     = "https://t.me/telegraph"
+	validPageURL       = "Sample-Page-12-15"
 )
 
-func TestContentFormatByString(t *testing.T) {
-	_, err := ContentFormat(demoContent)
+var (
+	validAccount    *Account
+	validPage       *Page
+	validContentDOM []Node
+
+	validContent = `<p>Hello, World!</p>`
+)
+
+func testValidContentFormatByString(t *testing.T) {
+	var err error
+	validContentDOM, err = ContentFormat(validContent)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
+	}
+	if len(validContentDOM) <= 0 {
+		t.Error("DOM content is nil")
 	}
 }
 
-func TestContentFormatByBytes(t *testing.T) {
-	_, err := ContentFormat([]byte(demoContent))
+func testValidContentFormatByBytes(t *testing.T) {
+	var err error
+	validContentDOM, err = ContentFormat([]byte(validContent))
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
+	}
+	if len(validContentDOM) <= 0 {
+		t.Error("DOM content is nil")
 	}
 }
 
-func TestCreateValidAccount(t *testing.T) {
-	newAccount := &Account{
-		ShortName:  "Sandbox",
-		AuthorName: "Anonymous",
-	}
-
-	account, err := CreateAccount(newAccount)
+func TestValidCreateAccount(t *testing.T) {
+	var err error
+	validAccount, err = CreateAccount(&Account{
+		ShortName:  validShortName,
+		AuthorName: validAuthorName,
+	})
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
 
-	demoAccount = *account
-	t.Logf("New account created!")
+	t.Run("validCreatePage", testValidCreatePage)
+	t.Run("validEditAccountInfo", testValidEditAccountInfo)
+	t.Run("validGetAccountInfo", testValidGetAccountInfo)
+	t.Run("validGetPageList", testValidGetPageList)
+	t.Run("validRevokeAccessToken", testValidRevokeAccessToken)
 }
 
-func TestCreateValidPage(t *testing.T) {
-	content, err := ContentFormat(demoContent)
+func testValidCreatePage(t *testing.T) {
+	t.Run("validContentFormatByString", testValidContentFormatByString)
+	t.Run("validContentFormatByBytes", testValidContentFormatByBytes)
+
+	var err error
+	validPage, err = validAccount.CreatePage(&Page{
+		Title:      validTitle,
+		AuthorName: validAuthorName,
+		AuthorURL:  validAuthorURL,
+		Content:    validContentDOM,
+	}, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
+	}
+	if validPage.URL == "" {
+		t.Error("new page not contain URL")
 	}
 
-	newPage := &Page{
-		Title:      "Sample Page",
-		AuthorName: "Anonymous",
-		AuthorURL:  "https://telegram.me/telegraph",
-		Content:    content,
-	}
-
-	page, err := demoAccount.CreatePage(newPage, true)
-	if err != nil {
-		t.Error(err)
-	}
-
-	demoPage = *page
-	t.Logf("%#v", *page)
+	t.Run("validEditPage", testValidEditPage)
 }
 
-func TestEditValidAccountInfo(t *testing.T) {
-	update := &Account{
-		ShortName:  "Sandbox",
-		AuthorName: "Anonymous",
-		AuthorURL:  "https://telegram.me/telegraph",
-	}
-
-	_, err := demoAccount.EditAccountInfo(update)
+func testValidEditAccountInfo(t *testing.T) {
+	update, err := validAccount.EditAccountInfo(&Account{
+		ShortName:  validShortName,
+		AuthorName: validNewAuthorName,
+		AuthorURL:  validAuthorURL,
+	})
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
-
-	t.Logf("Account updated!")
+	if update.AuthorName == validAccount.AuthorName {
+		t.Error("account not updated")
+	}
 }
 
-func TestEditValidPage(t *testing.T) {
-	content, err := ContentFormat(demoContent)
+func testValidEditPage(t *testing.T) {
+	var err error
+	validPage, err = validAccount.EditPage(&Page{
+		Path:       validPage.Path,
+		Title:      validTitle,
+		AuthorName: validAuthorName,
+		Content:    validContentDOM,
+	}, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
-
-	update := &Page{
-		Path:       demoPage.Path,
-		Title:      "Sample Page",
-		AuthorName: "Anonymous",
-		Content:    content,
-	}
-
-	page, err := demoAccount.EditPage(update, true)
-	if err != nil {
-		t.Error(err)
-	}
-
-	t.Logf("%#v", *page)
 }
 
-func TestGetValidAccountInfo(t *testing.T) {
-	account, err := demoAccount.GetAccountInfo("short_name", "page_count")
+func testValidGetAccountInfo(t *testing.T) {
+	info, err := validAccount.GetAccountInfo("short_name", "page_count")
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
-
-	t.Logf("%s create %d pages", account.ShortName, account.PageCount)
+	if info.ShortName != validAccount.ShortName {
+		t.Error("get wrong account info")
+	}
 }
 
-func TestGetValidPageList(t *testing.T) {
-	pages, err := demoAccount.GetPageList(0, 3)
+func TestValidGetPage(t *testing.T) {
+	page, err := GetPage(validPage.Path, true)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
 
-	t.Logf("Total %d pages\n%#v", pages.TotalCount, pages.Pages)
+	if page.Title != validPage.Title {
+		t.Error("get wrong page")
+	}
 }
 
-func TestGetValidPage(t *testing.T) {
-	page, err := GetPage(demoPage.Path, true)
+func testValidGetPageList(t *testing.T) {
+	pages, err := validAccount.GetPageList(0, 3)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
 
-	t.Logf("%#v", *page)
+	if pages.TotalCount <= 0 {
+		t.Error("no one page in page list")
+	}
 }
 
-func TestGetValidViews(t *testing.T) {
-	views, err := GetViews("Sample-Page-12-15", -1, 0, 12, 2016)
+func TestValidGetViews(t *testing.T) {
+	stats, err := GetViews(validPageURL, -1, 0, 12, 2016)
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
 
-	t.Logf("This page have %d views", views.Views)
+	if stats.Views <= 0 {
+		t.Error("get 0 views")
+	}
 }
 
-func TestRevokeAccessToken(t *testing.T) {
-	_, err := demoAccount.RevokeAccessToken()
+func testValidRevokeAccessToken(t *testing.T) {
+	oldToken := validAccount.AccessToken
+
+	var err error
+	validAccount, err = validAccount.RevokeAccessToken()
 	if err != nil {
-		t.Error(err)
+		t.Error(err.Error())
+		t.FailNow()
 	}
 
-	t.Logf("New Access Token set!")
+	if validAccount.AccessToken == "" {
+		t.Error("revokeAccessToken return nothing")
+	}
+
+	if oldToken == validAccount.AccessToken {
+		t.Error("old and new tokens are equal")
+	}
 }
