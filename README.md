@@ -8,10 +8,6 @@
 [![Patreon](https://img.shields.io/badge/support-patreon-E6461A.svg?maxAge=2592000)](https://www.patreon.com/toby3d)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/avelino/awesome-go)
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/35rkCoL4sttSs4cRQMsPg2ZJ/toby3d/go-telegraph'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/35rkCoL4sttSs4cRQMsPg2ZJ/toby3d/go-telegraph.svg' />
-</a>
-
 All [methods](https://toby3d.github.io/go-telegraph/#available-methods) and [types](https://toby3d.github.io/go-telegraph/#available-types) available and this library (possibly) is ready for use in production. Yaay!
 
 ## Start using telegraph
