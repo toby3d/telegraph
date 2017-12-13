@@ -1,7 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
 	"strconv"
 
 	json "github.com/pquerna/ffjson/ffjson"
@@ -15,8 +14,7 @@ func GetPage(path string, returnContent bool) (*Page, error) {
 	// If true, content field will be returned in Page object.
 	args.Add("return_content", strconv.FormatBool(returnContent))
 
-	url := fmt.Sprintf(PathEndpoint, "getPage", path)
-	body, err := request(url, &args)
+	body, err := request("getPage", path, args)
 	if err != nil {
 		return nil, err
 	}

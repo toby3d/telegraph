@@ -1,8 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
-
 	json "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
@@ -17,8 +15,7 @@ func (account *Account) RevokeAccessToken() (*Account, error) {
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
 
-	url := fmt.Sprintf(APIEndpoint, "revokeAccessToken")
-	body, err := request(url, &args)
+	body, err := request("revokeAccessToken", "", args)
 	if err != nil {
 		return nil, err
 	}

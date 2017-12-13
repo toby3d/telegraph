@@ -1,8 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
-
 	json "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
@@ -27,8 +25,7 @@ func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
 	// or channel.
 	args.Add("author_url", update.AuthorURL)
 
-	url := fmt.Sprintf(APIEndpoint, "editAccountInfo")
-	body, err := request(url, &args)
+	body, err := request("editAccountInfo", "", args)
 	if err != nil {
 		return nil, err
 	}

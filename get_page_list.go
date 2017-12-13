@@ -1,7 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
 	"strconv"
 
 	json "github.com/pquerna/ffjson/ffjson"
@@ -32,8 +31,7 @@ func (account *Account) GetPageList(offset, limit int) (*PageList, error) {
 	// Limits the number of pages to be retrieved.
 	args.Add("limit", strconv.Itoa(limit))
 
-	url := fmt.Sprintf(APIEndpoint, "getPageList")
-	body, err := request(url, &args)
+	body, err := request("getPageList", "", args)
 	if err != nil {
 		return nil, err
 	}

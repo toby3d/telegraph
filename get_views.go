@@ -1,7 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
 	"strconv"
 
 	json "github.com/pquerna/ffjson/ffjson"
@@ -43,8 +42,7 @@ func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
 		args.Add("year", strconv.Itoa(year))
 	}
 
-	url := fmt.Sprintf(PathEndpoint, "getViews", path)
-	body, err := request(url, &args)
+	body, err := request("getViews", path, args)
 	if err != nil {
 		return nil, err
 	}
