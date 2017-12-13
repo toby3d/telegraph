@@ -26,6 +26,8 @@ func TestInvalidCreateAccount(t *testing.T) {
 	t.Run("invalidEditPage", testInvalidEditPage)
 	t.Run("invalidGetAccountInfo", testInvalidGetAccountInfo)
 	t.Run("invalidGetPageList", testInvalidGetPageList)
+	t.Run("invalidGetPageListByLimit", testInvalidGetPageListByLimit)
+	t.Run("invalidGetPageListByOffset", testInvalidGetPageListByOffset)
 	t.Run("invalidRevokeAccessToken", testInvalidRevokeAccessToken)
 }
 
