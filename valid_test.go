@@ -113,7 +113,7 @@ func testValidEditPage(t *testing.T) {
 }
 
 func testValidGetAccountInfo(t *testing.T) {
-	info, err := validAccount.GetAccountInfo("short_name", "page_count")
+	info, err := validAccount.GetAccountInfo(FieldShortName, FieldPageCount)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
