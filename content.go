@@ -8,8 +8,29 @@ import (
 	"golang.org/x/net/html"
 )
 
-// ContentFormat transforms data to a DOM-based format to represent the
-// content of the page.
+type (
+	// Node is abstract object represents a DOM Node. It can be a String which represents a DOM text
+	// node or a NodeElement object.
+	Node interface{}
+
+	// NodeElement represents a DOM element node.
+	NodeElement struct {
+		// Name of the DOM element.
+		// Available tags: a, aside, b, blockquote, br, code, em, figcaption, figure, h3, h4, hr, i,
+		// iframe, img, li, ol, p, pre, s, strong, u, ul, video.
+		Tag string `json:"tag"`
+
+		// Attributes of the DOM element. Key of object represents name of attribute, value
+		// represents value of attribute.
+		// Available attributes: href, src.
+		Attrs map[string]string `json:"attrs,omitempty"` // optional
+
+		// List of child nodes for the DOM element.
+		Children []Node `json:"children,omitempty"` // optional
+	}
+)
+
+// ContentFormat transforms data to a DOM-based format to represent the content of the page.
 func ContentFormat(data interface{}) ([]Node, error) {
 	var doc html.Node
 	switch dst := data.(type) {
