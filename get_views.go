@@ -19,26 +19,25 @@ func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
 	args := http.AcquireArgs()
 
 	if hour > -1 {
-		// If passed, the number of page views for the requested hour will
-		// be returned.
+		// If passed, the number of page views for the requested hour will be returned.
 		args.Add("hour", strconv.Itoa(hour))
 	}
 
 	if day > 0 {
-		// Required if hour is passed. If passed, the number of page views
-		// for the requested day will be returned.
+		// Required if hour is passed. If passed, the number of page views for the requested day will
+		// be returned.
 		args.Add("day", strconv.Itoa(day))
 	}
 
 	if month > 0 {
-		// Required if day is passed. If passed, the number of page views
-		// for the requested month will be returned.
+		// Required if day is passed. If passed, the number of page views for the requested month will
+		// be returned.
 		args.Add("month", strconv.Itoa(month))
 	}
 
 	if year > 0 {
-		// Required if month is passed. If passed, the number of page views
-		// for the requested year will be returned.
+		// Required if month is passed. If passed, the number of page views for the requested year
+		// will be returned.
 		args.Add("year", strconv.Itoa(year))
 	}
 

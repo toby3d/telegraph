@@ -34,8 +34,8 @@ func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
 
-	// List of account fields to return. Available fields: short_name,
-	// author_name, author_url, auth_url, page_count.
+	// List of account fields to return.
+	// Available fields: short_name, author_name, author_url, auth_url, page_count.
 	args.Add("fields", fmt.Sprint(`["`, strings.Join(fields, `","`), `"]`))
 
 	body, err := request("getAccountInfo", "", args)
