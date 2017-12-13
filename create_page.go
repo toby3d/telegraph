@@ -24,8 +24,8 @@ type Page struct {
 	// Name of the author, displayed below the title.
 	AuthorName string `json:"author_name,omitempty"` // optional
 
-	// Profile link, opened when users click on the author's name below the title. Can be any link,
-	// not necessarily to a Telegram profile or channel.
+	// Profile link, opened when users click on the author's name below the title.
+	// Can be any link, not necessarily to a Telegram profile or channel.
 	AuthorURL string `json:"author_url,omitempty"` // optional
 
 	// Image URL of the page.
@@ -37,7 +37,8 @@ type Page struct {
 	// Number of page views for the page.
 	Views int `json:"views"`
 
-	// Only returned if access_token passed. True, if the target Telegraph account can edit the page.
+	// Only returned if access_token passed. True, if the target Telegraph account
+	// can edit the page.
 	CanEdit bool `json:"can_edit,omitempty"` // optional
 }
 
