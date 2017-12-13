@@ -3,6 +3,7 @@ package telegraph
 import (
 	"bytes"
 	"errors"
+	"io"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -42,6 +43,12 @@ func ContentFormat(data interface{}) ([]Node, error) {
 		doc = *dom
 	case []byte:
 		dom, err := html.Parse(bytes.NewReader(dst))
+		if err != nil {
+			return nil, err
+		}
+		doc = *dom
+	case io.Reader:
+		dom, err := html.Parse(dst)
 		if err != nil {
 			return nil, err
 		}
