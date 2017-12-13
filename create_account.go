@@ -38,17 +38,16 @@ type Account struct {
 func CreateAccount(account *Account) (*Account, error) {
 	args := http.AcquireArgs()
 
-	// Account name, helps users with several accounts remember which they are
-	// currently using. Displayed to the user above the "Edit/Publish" button
-	// on Telegra.ph, other users don't see this name.
+	// Account name, helps users with several accounts remember which they are currently using.
+	// Displayed to the user above the "Edit/Publish" button on Telegra.ph, other users don't see
+	// this name.
 	args.Add("short_name", account.ShortName) // required
 
 	// Default author name used when creating new articles.
 	args.Add("author_name", account.AuthorName)
 
-	// Default profile link, opened when users click on the author's name
-	// below the title. Can be any link, not necessarily to a Telegram profile
-	// or channel.
+	// Default profile link, opened when users click on the author's name below the title. Can be any
+	// link, not necessarily to a Telegram profile or channel.
 	args.Add("author_url", account.AuthorURL)
 
 	body, err := request("createAccount", "", args)

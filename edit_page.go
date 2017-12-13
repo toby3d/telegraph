@@ -7,8 +7,7 @@ import (
 	http "github.com/valyala/fasthttp"
 )
 
-// EditPage edit an existing Telegraph page. On success, returns a Page
-// object.
+// EditPage edit an existing Telegraph page. On success, returns a Page object.
 func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error) {
 	args := http.AcquireArgs()
 
@@ -24,9 +23,8 @@ func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error
 	}
 
 	if update.AuthorURL != "" {
-		// Profile link, opened when users click on the author's name below
-		// the title. Can be any link, not necessarily to a Telegram profile
-		// or channel.
+		// Profile link, opened when users click on the author's name below the title. Can be any
+		// link, not necessarily to a Telegram profile or channel.
 		args.Add("author_url", update.AuthorURL)
 	}
 

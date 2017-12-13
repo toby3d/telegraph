@@ -57,9 +57,8 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 	}
 
 	if page.AuthorURL != "" {
-		// Profile link, opened when users click on the author's name below
-		// the title. Can be any link, not necessarily to a Telegram profile
-		// or channel.
+		// Profile link, opened when users click on the author's name below the title. Can be any
+		// link, not necessarily to a Telegram profile or channel.
 		args.Add("author_url", page.AuthorURL)
 	}
 
