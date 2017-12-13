@@ -18,12 +18,12 @@ const (
 	// FieldAuthorURL used as GetAccountInfo argument for getting profile link.
 	FieldAuthorURL = "author_url"
 
-	// FieldAuthURL used as GetAccountInfo argument for getting URL to authorize a browser on
-	// telegra.ph.
+	// FieldAuthURL used as GetAccountInfo argument for getting URL to authorize
+	// a browser on telegra.ph.
 	FieldAuthURL = "auth_url"
 
-	// FieldPageCount used as GetAccountInfo argument for getting number of pages belonging to the
-	// Telegraph account.
+	// FieldPageCount used as GetAccountInfo argument for getting number of pages
+	// belonging to the Telegraph account.
 	FieldPageCount = "page_count"
 )
 
