@@ -15,7 +15,7 @@ type PageViews struct {
 
 // GetViews get the number of views for a Telegraph article. By default, the total number of page
 // views will be returned. Returns a PageViews object on success.
-func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
+func GetViews(path string, year, month, day, hour int) (*PageViews, error) {
 	args := http.AcquireArgs()
 
 	if hour > -1 {

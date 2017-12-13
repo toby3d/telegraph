@@ -148,7 +148,7 @@ func testValidGetPageList(t *testing.T) {
 }
 
 func TestValidGetViews(t *testing.T) {
-	stats, err := GetViews(validPageURL, -1, 0, 12, 2016)
+	stats, err := GetViews(validPageURL, 2016, 12, 0, -1)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
