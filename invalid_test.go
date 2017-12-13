@@ -11,7 +11,7 @@ const (
 var invalidAccount = &Account{}
 
 func TestInvalidContentFormat(t *testing.T) {
-	if _, err := ContentFormat(invalidContent); err == nil {
+	if _, err := ContentFormat(invalidContent); err != ErrInvalidDataType {
 		t.Error()
 	}
 }
