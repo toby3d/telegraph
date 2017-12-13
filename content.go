@@ -31,6 +31,10 @@ type (
 	}
 )
 
+// ErrInvalidDataType is returned when ContentFormat function are passed a data argument of invalid
+// type.
+var ErrInvalidDataType = errors.New("invalid data type")
+
 // ContentFormat transforms data to a DOM-based format to represent the content of the page.
 func ContentFormat(data interface{}) ([]Node, error) {
 	var doc html.Node
@@ -54,7 +58,7 @@ func ContentFormat(data interface{}) ([]Node, error) {
 		}
 		doc = *dom
 	default:
-		return nil, errors.New("invalid data type, use []byte or string")
+		return nil, ErrInvalidDataType
 	}
 
 	var content []Node
