@@ -8,8 +8,26 @@ import (
 	http "github.com/valyala/fasthttp"
 )
 
-// GetAccountInfo get information about a Telegraph account. Returns an
-// Account object on success.
+const (
+	// FieldShortName used as GetAccountInfo argument for getting account name.
+	FieldShortName = "short_name"
+
+	// FieldAuthorName used as GetAccountInfo argument for getting author name.
+	FieldAuthorName = "author_name"
+
+	// FieldAuthorURL used as GetAccountInfo argument for getting profile link.
+	FieldAuthorURL = "author_url"
+
+	// FieldAuthURL used as GetAccountInfo argument for getting URL to authorize a browser on
+	// telegra.ph.
+	FieldAuthURL = "auth_url"
+
+	// FieldPageCount used as GetAccountInfo argument for getting number of pages belonging to the
+	// Telegraph account.
+	FieldPageCount = "page_count"
+)
+
+// GetAccountInfo get information about a Telegraph account. Returns an Account object on success.
 func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
 	args := http.AcquireArgs()
 

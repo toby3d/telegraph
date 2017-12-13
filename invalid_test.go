@@ -54,7 +54,7 @@ func testInvalidEditPage(t *testing.T) {
 }
 
 func testInvalidGetAccountInfo(t *testing.T) {
-	if _, err := invalidAccount.GetAccountInfo("short_name", "page_count"); err == nil {
+	if _, err := invalidAccount.GetAccountInfo(FieldShortName, FieldPageCount); err == nil {
 		t.Error()
 	}
 }
