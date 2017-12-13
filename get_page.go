@@ -9,7 +9,7 @@ import (
 
 // GetPage get a Telegraph page. Returns a Page object on success.
 func GetPage(path string, returnContent bool) (*Page, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// If true, content field will be returned in Page object.
 	args.Add("return_content", strconv.FormatBool(returnContent))

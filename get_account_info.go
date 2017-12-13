@@ -11,7 +11,7 @@ import (
 // GetAccountInfo get information about a Telegraph account. Returns an
 // Account object on success.
 func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required

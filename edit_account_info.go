@@ -9,7 +9,7 @@ import (
 // parameters that you want to edit. On success, returns an Account object
 // with the default fields.
 func (account *Account) EditAccountInfo(update *Account) (*Account, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required

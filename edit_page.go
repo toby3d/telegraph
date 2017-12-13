@@ -10,7 +10,7 @@ import (
 // EditPage edit an existing Telegraph page. On success, returns a Page
 // object.
 func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
