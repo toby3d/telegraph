@@ -86,31 +86,31 @@ func TestInvalidGetPage(t *testing.T) {
 }
 
 func TestInvalidGetViewsByPage(t *testing.T) {
-	if _, err := GetViews(validPageURL, 2016, 12, 0, -1); err == nil {
+	if _, err := GetViews(invalidPageURL, 2016, 12, 0, -1); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByHour(t *testing.T) {
-	if _, err := GetViews(validPageURL, 42, 0, 0, 0); err == nil {
+	if _, err := GetViews(validPageURL, 0, 0, 0, 42); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByDay(t *testing.T) {
-	if _, err := GetViews(validPageURL, 23, 42, 0, 0); err == nil {
+	if _, err := GetViews(validPageURL, 0, 0, 42, 23); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByMonth(t *testing.T) {
-	if _, err := GetViews(validPageURL, 23, 24, 22, 0); err == nil {
+	if _, err := GetViews(validPageURL, 0, 22, 24, 23); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByYear(t *testing.T) {
-	if _, err := GetViews(validPageURL, 23, 24, 12, 1980); err == nil {
+	if _, err := GetViews(validPageURL, 1980, 12, 24, 23); err == nil {
 		t.Error()
 	}
 }
