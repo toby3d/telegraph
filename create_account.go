@@ -1,8 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
-
 	json "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
@@ -53,8 +51,7 @@ func CreateAccount(account *Account) (*Account, error) {
 	// or channel.
 	args.Add("author_url", account.AuthorURL)
 
-	url := fmt.Sprintf(APIEndpoint, "createAccount")
-	body, err := request(url, &args)
+	body, err := request("createAccount", "", args)
 	if err != nil {
 		return nil, err
 	}

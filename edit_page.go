@@ -1,7 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
 	"strconv"
 
 	json "github.com/pquerna/ffjson/ffjson"
@@ -42,8 +41,7 @@ func (account *Account) EditPage(update *Page, returnContent bool) (*Page, error
 	// Content of the page.
 	args.Add("content", string(content)) // required
 
-	url := fmt.Sprintf(PathEndpoint, "editPage", update.Path)
-	body, err := request(url, &args)
+	body, err := request("editPage", update.Path, args)
 	if err != nil {
 		return nil, err
 	}

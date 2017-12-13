@@ -1,7 +1,6 @@
 package telegraph
 
 import (
-	"fmt"
 	"strconv"
 
 	json "github.com/pquerna/ffjson/ffjson"
@@ -75,8 +74,7 @@ func (account *Account) CreatePage(page *Page, returnContent bool) (*Page, error
 	// Content of the page.
 	args.Add("content", string(content)) // required
 
-	url := fmt.Sprintf(APIEndpoint, "createPage")
-	body, err := request(url, &args)
+	body, err := request("createPage", "", args)
 	if err != nil {
 		return nil, err
 	}

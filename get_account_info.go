@@ -20,8 +20,7 @@ func (account *Account) GetAccountInfo(fields ...string) (*Account, error) {
 	// author_name, author_url, auth_url, page_count.
 	args.Add("fields", fmt.Sprint(`["`, strings.Join(fields, `","`), `"]`))
 
-	url := fmt.Sprintf(APIEndpoint, "getAccountInfo")
-	body, err := request(url, &args)
+	body, err := request("getAccountInfo", "", args)
 	if err != nil {
 		return nil, err
 	}
