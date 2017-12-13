@@ -36,7 +36,7 @@ type Account struct {
 // for each of their channels. On success, returns an Account object with the regular fields and an
 // additional access_token field.
 func CreateAccount(account *Account) (*Account, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// Account name, helps users with several accounts remember which they are
 	// currently using. Displayed to the user above the "Edit/Publish" button

@@ -20,7 +20,7 @@ type PageList struct {
 // GetPageList get a list of pages belonging to a Telegraph account. Returns a PageList object, sorted
 // by most recently created pages first.
 func (account *Account) GetPageList(offset, limit int) (*PageList, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required

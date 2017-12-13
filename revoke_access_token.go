@@ -10,7 +10,7 @@ import (
 // to believe the token was compromised. On success, returns an Account object
 // with new access_token and auth_url fields.
 func (account *Account) RevokeAccessToken() (*Account, error) {
-	var args http.Args
+	args := http.AcquireArgs()
 
 	// Access token of the Telegraph account.
 	args.Add("access_token", account.AccessToken) // required
