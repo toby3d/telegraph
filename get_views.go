@@ -8,9 +8,14 @@ import (
 	http "github.com/valyala/fasthttp"
 )
 
-// GetViews get the number of views for a Telegraph article. By default, the
-// total number of page views will be returned. Returns a PageViews object
-// on success.
+// PageViews represents the number of page views for a Telegraph article.
+type PageViews struct {
+	// Number of page views for the target page.
+	Views int `json:"views"`
+}
+
+// GetViews get the number of views for a Telegraph article. By default, the total number of page
+// views will be returned. Returns a PageViews object on success.
 func GetViews(path string, hour, day, month, year int) (*PageViews, error) {
 	var args http.Args
 

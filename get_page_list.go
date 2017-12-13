@@ -8,8 +8,18 @@ import (
 	http "github.com/valyala/fasthttp"
 )
 
-// GetPageList get a list of pages belonging to a Telegraph account. Returns
-// a PageList object, sorted by most recently created pages first.
+// PageList represents a list of Telegraph articles belonging to an account. Most recently created
+// articles first.
+type PageList struct {
+	// Total number of pages belonging to the target Telegraph account.
+	TotalCount int `json:"total_count"`
+
+	// Requested pages of the target Telegraph account.
+	Pages []*Page `json:"pages"`
+}
+
+// GetPageList get a list of pages belonging to a Telegraph account. Returns a PageList object, sorted
+// by most recently created pages first.
 func (account *Account) GetPageList(offset, limit int) (*PageList, error) {
 	var args http.Args
 
