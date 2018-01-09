@@ -17,68 +17,8 @@ Download and install it:
 Import it in your code:  
 `import "github.com/toby3d/telegraph"`
 
-## Example
-This is an example of "quick start", which shows **how to create a new account** for future pages, as well as **creating a [first simple page](http://telegra.ph/My-super-awesome-page-12-25)** with text, picture, video and signature:
-```go
-package main
-
-import (
-    "log"
-
-    telegraph "github.com/toby3d/telegraph"
-)
-
-// Example content. Be sure to wrap every media in a <figure> tag, okay?
-// Be easy, bro.
-const data = `
-    <figure>
-        <img src="/file/6a5b15e7eb4d7329ca7af.jpg"/>
-    </figure>
-    <p><i>Hello</i>, my name is <b>Page</b>, <u>look at me</u>!</p>
-    <figure>
-        <iframe src="https://youtu.be/fzQ6gRAEoy0"></iframe>
-        <figcaption>
-            Yes, you can embed youtube, vimeo and twitter widgets too!
-        </figcaption>
-    </figure>
-`
-
-func checkError(err error) {
-    if err != nil {
-        log.Fatalln(err.Error())
-    }
-}
-
-func main() {
-    // Create new Telegraph account. Author name/link can be epmty.
-    // So secure. Much anonymously. Wow.
-    newAccount := &telegraph.Account{
-        ShortName:  "toby3d", // required
-        AuthorName: "Maxim Lebedev",
-        AuthorURL:  "https://t.me/toby3d",
-    }
-    acc, err := telegraph.CreateAccount(newAccount)
-    checkError(err)
-
-    // Boom!.. And your text will be understandable for Telegraph. MAGIC.
-    content, err := telegraph.ContentFormat(data)
-    checkError(err)
-
-    newPage := &telegraph.Page{
-        Title:   "My super-awesome page",
-        Content: content,
-
-        // Not necessarily, but, hey, it's just an example.
-        AuthorName: acc.AuthorName,
-        AuthorURL:  acc.AuthorURL,
-    }
-
-    page, err := acc.CreatePage(newPage, false)
-    checkError(err)
-
-    log.Println("Kaboom! Page created, look what happened:", page.URL)
-}
-```
+## Examples
+See [GoDoc examples section](https://godoc.org/github.com/toby3d/telegraph#pkg-examples) or check [example_test.go](example_test.go).
 
 ## Need help?
 - [Open new issue](https://github.com/toby3d/telegraph/issues/new)
