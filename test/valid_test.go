@@ -1,6 +1,10 @@
-package telegraph
+package telegraph_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/toby3d/telegraph"
+)
 
 const (
 	validTitle         = "Testing"
@@ -12,16 +16,16 @@ const (
 )
 
 var (
-	validAccount    *Account
-	validPage       *Page
-	validContentDOM []Node
+	validAccount    *telegraph.Account
+	validPage       *telegraph.Page
+	validContentDOM []telegraph.Node
 
 	validContent = `<p>Hello, World!</p>`
 )
 
 func testValidContentFormatByString(t *testing.T) {
 	var err error
-	validContentDOM, err = ContentFormat(validContent)
+	validContentDOM, err = telegraph.ContentFormat(validContent)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
@@ -33,7 +37,7 @@ func testValidContentFormatByString(t *testing.T) {
 
 func testValidContentFormatByBytes(t *testing.T) {
 	var err error
-	validContentDOM, err = ContentFormat([]byte(validContent))
+	validContentDOM, err = telegraph.ContentFormat([]byte(validContent))
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
@@ -45,7 +49,7 @@ func testValidContentFormatByBytes(t *testing.T) {
 
 func TestValidCreateAccount(t *testing.T) {
 	var err error
-	validAccount, err = CreateAccount(&Account{
+	validAccount, err = telegraph.CreateAccount(&telegraph.Account{
 		ShortName:  validShortName,
 		AuthorName: validAuthorName,
 	})
@@ -66,7 +70,7 @@ func testValidCreatePage(t *testing.T) {
 	t.Run("validContentFormatByBytes", testValidContentFormatByBytes)
 
 	var err error
-	validPage, err = validAccount.CreatePage(&Page{
+	validPage, err = validAccount.CreatePage(&telegraph.Page{
 		Title:      validTitle,
 		AuthorName: validAuthorName,
 		AuthorURL:  validAuthorURL,
@@ -84,7 +88,7 @@ func testValidCreatePage(t *testing.T) {
 }
 
 func testValidEditAccountInfo(t *testing.T) {
-	update, err := validAccount.EditAccountInfo(&Account{
+	update, err := validAccount.EditAccountInfo(&telegraph.Account{
 		ShortName:  validShortName,
 		AuthorName: validNewAuthorName,
 		AuthorURL:  validAuthorURL,
@@ -100,7 +104,7 @@ func testValidEditAccountInfo(t *testing.T) {
 
 func testValidEditPage(t *testing.T) {
 	var err error
-	validPage, err = validAccount.EditPage(&Page{
+	validPage, err = validAccount.EditPage(&telegraph.Page{
 		Path:       validPage.Path,
 		Title:      validTitle,
 		AuthorName: validAuthorName,
@@ -113,7 +117,7 @@ func testValidEditPage(t *testing.T) {
 }
 
 func testValidGetAccountInfo(t *testing.T) {
-	info, err := validAccount.GetAccountInfo(FieldShortName, FieldPageCount)
+	info, err := validAccount.GetAccountInfo(telegraph.FieldShortName, telegraph.FieldPageCount)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
@@ -124,7 +128,7 @@ func testValidGetAccountInfo(t *testing.T) {
 }
 
 func TestValidGetPage(t *testing.T) {
-	page, err := GetPage(validPage.Path, true)
+	page, err := telegraph.GetPage(validPage.Path, true)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
@@ -148,7 +152,7 @@ func testValidGetPageList(t *testing.T) {
 }
 
 func TestValidGetViews(t *testing.T) {
-	stats, err := GetViews(validPageURL, 2016, 12, 0, -1)
+	stats, err := telegraph.GetViews(validPageURL, 2016, 12, 0, -1)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
