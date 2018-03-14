@@ -18,7 +18,7 @@ Import it in your code:
 `import "github.com/toby3d/telegraph"`
 
 ## Examples
-See [GoDoc examples section](https://godoc.org/github.com/toby3d/telegraph#pkg-examples) or check [example_test.go](example_test.go).
+See [GoDoc examples section](https://godoc.org/github.com/toby3d/telegraph#pkg-examples) or check [example_test.go](/example_test.go).
 
 ## Need help?
 - [Open new issue](https://github.com/toby3d/telegraph/issues/new)
