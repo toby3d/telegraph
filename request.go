@@ -21,6 +21,7 @@ type response struct {
 }
 
 func request(method, path string, args *http.Args) (*response, error) {
+	defer http.ReleaseArgs(args)
 	requestURI := &url.URL{
 		Scheme: "https",
 		Host:   "api.telegra.ph",
