@@ -1,6 +1,10 @@
-package telegraph
+package telegraph_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/toby3d/telegraph"
+)
 
 const (
 	invalidAuthorURL = "lolwat"
@@ -8,16 +12,16 @@ const (
 	invalidContent   = 42
 )
 
-var invalidAccount = &Account{}
+var invalidAccount = &telegraph.Account{}
 
 func TestInvalidContentFormat(t *testing.T) {
-	if _, err := ContentFormat(invalidContent); err != ErrInvalidDataType {
+	if _, err := telegraph.ContentFormat(invalidContent); err != telegraph.ErrInvalidDataType {
 		t.Error()
 	}
 }
 
 func TestInvalidCreateAccount(t *testing.T) {
-	if _, err := CreateAccount(invalidAccount); err == nil {
+	if _, err := telegraph.CreateAccount(invalidAccount); err == nil {
 		t.Error()
 	}
 
@@ -32,7 +36,7 @@ func TestInvalidCreateAccount(t *testing.T) {
 }
 
 func testInvalidCreatePage(t *testing.T) {
-	if _, err := invalidAccount.CreatePage(&Page{
+	if _, err := invalidAccount.CreatePage(&telegraph.Page{
 		AuthorURL: invalidAuthorURL,
 	}, false); err == nil {
 		t.Error()
@@ -40,7 +44,7 @@ func testInvalidCreatePage(t *testing.T) {
 }
 
 func testInvalidEditAccountInfo(t *testing.T) {
-	if _, err := invalidAccount.EditAccountInfo(&Account{
+	if _, err := invalidAccount.EditAccountInfo(&telegraph.Account{
 		AuthorURL: invalidAuthorURL,
 	}); err == nil {
 		t.Error()
@@ -48,7 +52,7 @@ func testInvalidEditAccountInfo(t *testing.T) {
 }
 
 func testInvalidEditPage(t *testing.T) {
-	if _, err := invalidAccount.EditPage(&Page{
+	if _, err := invalidAccount.EditPage(&telegraph.Page{
 		AuthorURL: invalidAuthorURL,
 	}, false); err == nil {
 		t.Error()
@@ -56,7 +60,7 @@ func testInvalidEditPage(t *testing.T) {
 }
 
 func testInvalidGetAccountInfo(t *testing.T) {
-	if _, err := invalidAccount.GetAccountInfo(FieldShortName, FieldPageCount); err == nil {
+	if _, err := invalidAccount.GetAccountInfo(telegraph.FieldShortName, telegraph.FieldPageCount); err == nil {
 		t.Error()
 	}
 }
@@ -80,37 +84,37 @@ func testInvalidGetPageListByLimit(t *testing.T) {
 }
 
 func TestInvalidGetPage(t *testing.T) {
-	if _, err := GetPage(invalidPageURL, true); err == nil {
+	if _, err := telegraph.GetPage(invalidPageURL, true); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByPage(t *testing.T) {
-	if _, err := GetViews(invalidPageURL, 2016, 12, 0, -1); err == nil {
+	if _, err := telegraph.GetViews(invalidPageURL, 2016, 12, 0, -1); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByHour(t *testing.T) {
-	if _, err := GetViews(validPageURL, 0, 0, 0, 42); err == nil {
+	if _, err := telegraph.GetViews(validPageURL, 0, 0, 0, 42); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByDay(t *testing.T) {
-	if _, err := GetViews(validPageURL, 0, 0, 42, 23); err == nil {
+	if _, err := telegraph.GetViews(validPageURL, 0, 0, 42, 23); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByMonth(t *testing.T) {
-	if _, err := GetViews(validPageURL, 0, 22, 24, 23); err == nil {
+	if _, err := telegraph.GetViews(validPageURL, 0, 22, 24, 23); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByYear(t *testing.T) {
-	if _, err := GetViews(validPageURL, 1980, 12, 24, 23); err == nil {
+	if _, err := telegraph.GetViews(validPageURL, 1980, 12, 24, 23); err == nil {
 		t.Error()
 	}
 }
