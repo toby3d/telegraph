@@ -1,4 +1,5 @@
 # GoLang bindings for the Telegraph API [![discord](https://discordapp.com/api/guilds/208605007744860163/widget.png)](https://discord.gg/QJ8z5BN)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftoby3d%2Ftelegraph.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftoby3d%2Ftelegraph?ref=badge_shield)
 > This project is just to provide a wrapper around the API without any additional features.
 
 [![License](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](LICENSE.md)
@@ -23,3 +24,6 @@ See [GoDoc examples section](https://godoc.org/github.com/toby3d/telegraph#pkg-e
 ## Need help?
 - [Open new issue](https://github.com/toby3d/telegraph/issues/new)
 - [Discuss in Discord](https://discord.gg/QJ8z5BN)
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftoby3d%2Ftelegraph.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftoby3d%2Ftelegraph?ref=badge_large)
