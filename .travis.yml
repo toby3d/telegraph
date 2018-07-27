@@ -1,9 +1,0 @@
-language: go
-
-go:
-  - 1.7
-  - tip
-
-install:
-  - go get
-  - go get golang.org/x/net/html
