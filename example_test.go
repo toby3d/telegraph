@@ -2,8 +2,9 @@ package telegraph_test
 
 import (
 	"log"
+	"time"
 
-	"github.com/toby3d/telegraph"
+	"gitlab.com/toby3d/telegraph"
 )
 
 // Content in a string format (for this example).
@@ -22,8 +23,8 @@ const data = `
 `
 
 var (
-	account *telegraph.Account
-	page    *telegraph.Page
+	account = new(telegraph.Account)
+	page    = new(telegraph.Page)
 	content []telegraph.Node
 )
 
@@ -168,7 +169,10 @@ func ExampleAccount_GetPageList() {
 
 func ExampleGetViews() {
 	pagePath := "Sample-Page-12-15"
-	views, err := telegraph.GetViews(pagePath, 2016, 12, 0, -1)
+	views, err := telegraph.GetViews(
+		pagePath,
+		time.Date(2016, 12, 0, 0, 0, 0, 0, nil),
+	)
 	errCheck(err)
 
 	log.Println(pagePath, "has been viewed", views.Views, "times")

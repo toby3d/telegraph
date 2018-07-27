@@ -2,8 +2,9 @@ package telegraph_test
 
 import (
 	"testing"
+	"time"
 
-	"github.com/toby3d/telegraph"
+	"gitlab.com/toby3d/telegraph"
 )
 
 const (
@@ -12,7 +13,7 @@ const (
 	invalidContent   = 42
 )
 
-var invalidAccount = &telegraph.Account{}
+var invalidAccount = new(telegraph.Account)
 
 func TestInvalidContentFormat(t *testing.T) {
 	if _, err := telegraph.ContentFormat(invalidContent); err != telegraph.ErrInvalidDataType {
@@ -60,7 +61,10 @@ func testInvalidEditPage(t *testing.T) {
 }
 
 func testInvalidGetAccountInfo(t *testing.T) {
-	if _, err := invalidAccount.GetAccountInfo(telegraph.FieldShortName, telegraph.FieldPageCount); err == nil {
+	if _, err := invalidAccount.GetAccountInfo(
+		telegraph.FieldShortName,
+		telegraph.FieldPageCount,
+	); err == nil {
 		t.Error()
 	}
 }
@@ -90,31 +94,46 @@ func TestInvalidGetPage(t *testing.T) {
 }
 
 func TestInvalidGetViewsByPage(t *testing.T) {
-	if _, err := telegraph.GetViews(invalidPageURL, 2016, 12, 0, -1); err == nil {
+	if _, err := telegraph.GetViews(
+		invalidPageURL,
+		time.Date(2016, time.December, 0, 0, 0, 0, 0, time.UTC),
+	); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByHour(t *testing.T) {
-	if _, err := telegraph.GetViews(validPageURL, 0, 0, 0, 42); err == nil {
+	if _, err := telegraph.GetViews(
+		validPageURL,
+		time.Date(0, 0, 0, 42, 0, 0, 0, time.UTC),
+	); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByDay(t *testing.T) {
-	if _, err := telegraph.GetViews(validPageURL, 0, 0, 42, 23); err == nil {
+	if _, err := telegraph.GetViews(
+		validPageURL,
+		time.Date(0, 0, 42, 23, 0, 0, 0, time.UTC),
+	); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByMonth(t *testing.T) {
-	if _, err := telegraph.GetViews(validPageURL, 0, 22, 24, 23); err == nil {
+	if _, err := telegraph.GetViews(
+		validPageURL,
+		time.Date(0, 22, 24, 23, 0, 0, 0, time.UTC),
+	); err == nil {
 		t.Error()
 	}
 }
 
 func TestInvalidGetViewsByYear(t *testing.T) {
-	if _, err := telegraph.GetViews(validPageURL, 1980, 12, 24, 23); err == nil {
+	if _, err := telegraph.GetViews(
+		validPageURL,
+		time.Date(1980, time.December, 24, 23, 0, 0, 0, time.UTC),
+	); err == nil {
 		t.Error()
 	}
 }

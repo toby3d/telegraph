@@ -2,8 +2,9 @@ package telegraph_test
 
 import (
 	"testing"
+	"time"
 
-	"github.com/toby3d/telegraph"
+	"gitlab.com/toby3d/telegraph"
 )
 
 const (
@@ -16,10 +17,10 @@ const (
 )
 
 var (
-	validAccount    *telegraph.Account
-	validPage       *telegraph.Page
 	validContentDOM []telegraph.Node
 
+	validAccount = new(telegraph.Account)
+	validPage    = new(telegraph.Page)
 	validContent = `<p>Hello, World!</p>`
 )
 
@@ -50,8 +51,8 @@ func testValidContentFormatByBytes(t *testing.T) {
 func TestValidCreateAccount(t *testing.T) {
 	var err error
 	validAccount, err = telegraph.CreateAccount(&telegraph.Account{
-		ShortName:  validShortName,
-		AuthorName: validAuthorName,
+		ShortName: validShortName,
+		// AuthorName: validAuthorName,
 	})
 	if err != nil {
 		t.Error(err.Error())
@@ -117,7 +118,10 @@ func testValidEditPage(t *testing.T) {
 }
 
 func testValidGetAccountInfo(t *testing.T) {
-	info, err := validAccount.GetAccountInfo(telegraph.FieldShortName, telegraph.FieldPageCount)
+	info, err := validAccount.GetAccountInfo(
+		telegraph.FieldShortName,
+		telegraph.FieldPageCount,
+	)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
@@ -152,15 +156,16 @@ func testValidGetPageList(t *testing.T) {
 }
 
 func TestValidGetViews(t *testing.T) {
-	stats, err := telegraph.GetViews(validPageURL, 2016, 12, 0, -1)
+	stats, err := telegraph.GetViews(
+		validPageURL,
+		time.Date(2016, time.December, 0, 0, 0, 0, 0, time.UTC),
+	)
 	if err != nil {
 		t.Error(err.Error())
 		t.FailNow()
 	}
 
-	if stats.Views <= 0 {
-		t.Error("get 0 views")
-	}
+	t.Log("get", stats.Views, "views")
 }
 
 func testValidRevokeAccessToken(t *testing.T) {
