@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"gitlab.com/toby3d/telegraph"
 )
 
@@ -18,34 +19,24 @@ const (
 
 var (
 	validContentDOM []telegraph.Node
+	validAccount    *telegraph.Account
+	validPage       *telegraph.Page
 
-	validAccount = new(telegraph.Account)
-	validPage    = new(telegraph.Page)
 	validContent = `<p>Hello, World!</p>`
 )
 
 func testValidContentFormatByString(t *testing.T) {
 	var err error
 	validContentDOM, err = telegraph.ContentFormat(validContent)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-	if len(validContentDOM) <= 0 {
-		t.Error("DOM content is nil")
-	}
+	assert.NoError(t, err)
+	assert.NotEmpty(t, validContentDOM)
 }
 
 func testValidContentFormatByBytes(t *testing.T) {
 	var err error
 	validContentDOM, err = telegraph.ContentFormat([]byte(validContent))
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-	if len(validContentDOM) <= 0 {
-		t.Error("DOM content is nil")
-	}
+	assert.NoError(t, err)
+	assert.NotEmpty(t, validContentDOM)
 }
 
 func TestValidCreateAccount(t *testing.T) {
@@ -54,10 +45,7 @@ func TestValidCreateAccount(t *testing.T) {
 		ShortName: validShortName,
 		// AuthorName: validAuthorName,
 	})
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
+	assert.NoError(t, err)
 
 	t.Run("validCreatePage", testValidCreatePage)
 	t.Run("validEditAccountInfo", testValidEditAccountInfo)
@@ -77,14 +65,8 @@ func testValidCreatePage(t *testing.T) {
 		AuthorURL:  validAuthorURL,
 		Content:    validContentDOM,
 	}, true)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-	if validPage.URL == "" {
-		t.Error("new page not contain URL")
-	}
-
+	assert.NoError(t, err)
+	assert.NotEmpty(t, validPage.URL)
 	t.Run("validEditPage", testValidEditPage)
 }
 
@@ -94,13 +76,8 @@ func testValidEditAccountInfo(t *testing.T) {
 		AuthorName: validNewAuthorName,
 		AuthorURL:  validAuthorURL,
 	})
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-	if update.AuthorName == validAccount.AuthorName {
-		t.Error("account not updated")
-	}
+	assert.NoError(t, err)
+	assert.NotEqual(t, validAccount.AuthorName, update.AuthorName)
 }
 
 func testValidEditPage(t *testing.T) {
@@ -111,78 +88,38 @@ func testValidEditPage(t *testing.T) {
 		AuthorName: validAuthorName,
 		Content:    validContentDOM,
 	}, true)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
+	assert.NoError(t, err)
 }
 
 func testValidGetAccountInfo(t *testing.T) {
-	info, err := validAccount.GetAccountInfo(
-		telegraph.FieldShortName,
-		telegraph.FieldPageCount,
-	)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-	if info.ShortName != validAccount.ShortName {
-		t.Error("get wrong account info")
-	}
+	info, err := validAccount.GetAccountInfo(telegraph.FieldShortName, telegraph.FieldPageCount)
+	assert.NoError(t, err)
+	assert.Equal(t, validAccount.ShortName, info.ShortName)
 }
 
 func TestValidGetPage(t *testing.T) {
 	page, err := telegraph.GetPage(validPage.Path, true)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-
-	if page.Title != validPage.Title {
-		t.Error("get wrong page")
-	}
+	assert.NoError(t, err)
+	assert.Equal(t, validPage.Title, page.Title)
 }
 
 func testValidGetPageList(t *testing.T) {
 	pages, err := validAccount.GetPageList(0, 3)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-
-	if pages.TotalCount <= 0 {
-		t.Error("no one page in page list")
-	}
+	assert.NoError(t, err)
+	assert.NotZero(t, pages.TotalCount)
 }
 
 func TestValidGetViews(t *testing.T) {
-	stats, err := telegraph.GetViews(
-		validPageURL,
-		time.Date(2016, time.December, 0, 0, 0, 0, 0, time.UTC),
-	)
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-
+	stats, err := telegraph.GetViews(validPageURL, time.Date(2016, time.December, 0, 0, 0, 0, 0, time.UTC))
+	assert.NoError(t, err)
 	t.Log("get", stats.Views, "views")
 }
 
 func testValidRevokeAccessToken(t *testing.T) {
 	oldToken := validAccount.AccessToken
-
 	var err error
 	validAccount, err = validAccount.RevokeAccessToken()
-	if err != nil {
-		t.Error(err.Error())
-		t.FailNow()
-	}
-
-	if validAccount.AccessToken == "" {
-		t.Error("revokeAccessToken return nothing")
-	}
-
-	if oldToken == validAccount.AccessToken {
-		t.Error("old and new tokens are equal")
-	}
+	assert.NoError(t, err)
+	assert.NotEmpty(t, validAccount.AccessToken)
+	assert.NotEqual(t, validAccount.AccessToken, oldToken)
 }
