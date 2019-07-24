@@ -15,21 +15,15 @@ func ContentFormat(data interface{}) (n []Node, err error) {
 	switch src := data.(type) {
 	case string:
 		dst, err = html.Parse(strings.NewReader(src))
-		if err != nil {
-			return nil, err
-		}
 	case []byte:
 		dst, err = html.Parse(bytes.NewReader(src))
-		if err != nil {
-			return nil, err
-		}
 	case io.Reader:
 		dst, err = html.Parse(src)
-		if err != nil {
-			return nil, err
-		}
 	default:
-		return nil, ErrInvalidDataType
+		err = ErrInvalidDataType
+	}
+	if err != nil {
+		return nil, err
 	}
 
 	n = append(n, domToNode(dst.FirstChild))
