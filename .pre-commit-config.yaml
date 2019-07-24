@@ -1,0 +1,14 @@
+default_stages: [commit, push]
+fail_fast: true
+minimum_pre_commit_version: '1'
+repos:
+- repo: https://github.com/syntaqx/git-hooks
+  rev: v0.0.16
+  hooks:
+  - id: go-mod-tidy
+  - id: go-fmt
+  - id: go-test
+- repo: https://github.com/golangci/golangci-lint
+  rev: v1.17.1
+  hooks:
+  - id: golangci-lint
