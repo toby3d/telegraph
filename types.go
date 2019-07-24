@@ -1,9 +1,10 @@
-// All types used in the Telegraph API responses are represented as JSON-objects.
-// Optional fields may be not returned when irrelevant.
+//go:generate ffjson $GOFILE
 package telegraph
 
 import "errors"
 
+// All types used in the Telegraph API responses are represented as JSON-objects.
+// Optional fields may be not returned when irrelevant.
 type (
 	// Account represents a Telegraph account.
 	Account struct {

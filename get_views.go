@@ -3,30 +3,35 @@ package telegraph
 import (
 	gopath "path"
 	"strconv"
-	"time"
 
-	json "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
 
 // GetViews get the number of views for a Telegraph article. By default, the total number of page
 // views will be returned. Returns a PageViews object on success.
-func GetViews(path string, date time.Time) (r *PageViews, err error) {
+func GetViews(path string, date ...int) (*PageViews, error) {
 	args := http.AcquireArgs()
 	defer http.ReleaseArgs(args)
 	args.Add("path", path) // required
-	args.Add("year", strconv.Itoa(date.Year()))
-	args.Add("month", strconv.Itoa(int(date.Month())))
-	args.Add("day", strconv.Itoa(date.Day()))
-	args.Add("hour", strconv.Itoa(date.Hour()))
+	if len(date) > 0 {
+		args.Add("year", strconv.Itoa(date[0]))
+	}
+	if len(date) > 1 {
+		args.Add("month", strconv.Itoa(date[1]))
+	}
+	if len(date) > 2 {
+		args.Add("day", strconv.Itoa(date[2]))
+	}
+	if len(date) > 3 {
+		args.Add("hour", strconv.Itoa(date[3]))
+	}
 
-	dst := new(Response)
-	dst, err = makeRequest(gopath.Join("getViews", path), args)
+	data, err := makeRequest(gopath.Join("getViews", path), args)
 	if err != nil {
 		return nil, err
 	}
 
-	r = new(PageViews)
-	err = json.Unmarshal(*dst.Result, r)
-	return
+	var result PageViews
+	err = parser.Unmarshal(data, &result)
+	return &result, err
 }

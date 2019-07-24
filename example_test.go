@@ -2,7 +2,6 @@ package telegraph_test
 
 import (
 	"log"
-	"time"
 
 	"gitlab.com/toby3d/telegraph"
 )
@@ -23,9 +22,9 @@ const data = `
 `
 
 var (
-	account = new(telegraph.Account)
-	page    = new(telegraph.Page)
-	content []telegraph.Node
+	account *telegraph.Account //nolint:gochecknoglobals
+	page    *telegraph.Page    //nolint:gochecknoglobals
+	content []telegraph.Node   //nolint:gochecknoglobals
 )
 
 func errCheck(err error) {
@@ -37,7 +36,7 @@ func errCheck(err error) {
 func Example_fastStart() {
 	var err error
 	// Create new Telegraph account.
-	requisites := &telegraph.Account{
+	requisites := telegraph.Account{
 		ShortName: "toby3d", // required
 
 		// Author name/link can be epmty. So secure. Much anonymously. Wow.
@@ -58,7 +57,7 @@ func Example_fastStart() {
 	// Boom!.. And your text will be understandable for Telegraph. MAGIC.
 
 	// Create new Telegraph page
-	pageData := &telegraph.Page{
+	pageData := telegraph.Page{
 		Title:   "My super-awesome page", // required
 		Content: content,                 // required
 
@@ -75,7 +74,7 @@ func Example_fastStart() {
 
 func ExampleCreateAccount() {
 	var err error
-	account, err = telegraph.CreateAccount(&telegraph.Account{
+	account, err = telegraph.CreateAccount(telegraph.Account{
 		ShortName:  "Sandbox",
 		AuthorName: "Anonymous",
 	})
@@ -89,7 +88,7 @@ func ExampleCreateAccount() {
 
 func ExampleAccount_EditAccountInfo() {
 	var err error
-	account, err = account.EditAccountInfo(&telegraph.Account{
+	account, err = account.EditAccountInfo(telegraph.Account{
 		ShortName:  "Sandbox",
 		AuthorName: "Anonymous",
 	})
@@ -122,7 +121,7 @@ func ExampleAccount_RevokeAccessToken() {
 
 func ExampleAccount_CreatePage() {
 	var err error
-	page, err = account.CreatePage(&telegraph.Page{
+	page, err = account.CreatePage(telegraph.Page{
 		Title:      "Sample Page",
 		AuthorName: account.AuthorName,
 		Content:    content,
@@ -135,7 +134,7 @@ func ExampleAccount_CreatePage() {
 
 func ExampleAccount_EditPage() {
 	var err error
-	page, err = account.EditPage(&telegraph.Page{
+	page, err = account.EditPage(telegraph.Page{
 		Title:      "Sample Page",
 		AuthorName: account.AuthorName,
 		Content:    content,
@@ -169,10 +168,7 @@ func ExampleAccount_GetPageList() {
 
 func ExampleGetViews() {
 	pagePath := "Sample-Page-12-15"
-	views, err := telegraph.GetViews(
-		pagePath,
-		time.Date(2016, 12, 0, 0, 0, 0, 0, nil),
-	)
+	views, err := telegraph.GetViews(pagePath, 2016, 12)
 	errCheck(err)
 
 	log.Println(pagePath, "has been viewed", views.Views, "times")

@@ -1,7 +1,6 @@
 package telegraph
 
 import (
-	json "github.com/pquerna/ffjson/ffjson"
 	http "github.com/valyala/fasthttp"
 )
 
@@ -10,24 +9,19 @@ import (
 // keep individual author names and profile links for each of their channels. On
 // success, returns an Account object with the regular fields and an additional
 // access_token field.
-func CreateAccount(account *Account) (r *Account, err error) {
-	if account == nil {
-		return nil, ErrNoInputData
-	}
-
+func CreateAccount(account Account) (*Account, error) {
 	args := http.AcquireArgs()
 	defer http.ReleaseArgs(args)
 	args.Add("short_name", account.ShortName) // required
 	args.Add("author_name", account.AuthorName)
 	args.Add("author_url", account.AuthorURL)
 
-	dst := new(Response)
-	dst, err = makeRequest("createAccount", args)
+	data, err := makeRequest("createAccount", args)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	r = new(Account)
-	err = json.Unmarshal(*dst.Result, r)
-	return
+	var result Account
+	err = parser.Unmarshal(data, &result)
+	return &result, err
 }
