@@ -3,8 +3,6 @@ I develop this project in my spare time, and I do it and I will do it free of ch
 
 **These people sponsored current version of the project:**
 - Aurielb
-- Daniil Tlenov
-- @kirillDanshin
 - MoD21k
 - @YamiOdymel
 

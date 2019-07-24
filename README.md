@@ -1,13 +1,13 @@
 # GoLang bindings for the Telegraph API [![discord](https://discordapp.com/api/guilds/208605007744860163/widget.png)](https://discord.gg/QJ8z5BN)
 > This project is just to provide a wrapper around the API without any additional features.
 
-All [methods](https://toby3d.github.io/telegraph/#available-methods) and [types](https://toby3d.github.io/telegraph/#available-types) available and this library (possibly) is ready for use in production. Yaay!
+All methods and types available and this library (possibly) is ready for use in production. Yaay!
 
 ## Start using telegraph
-Download and install it:  
+Download and install it:
 `$ go get -u gitlab.com/toby3d/telegraph`
 
-Import it in your code:  
+Import it in your code:
 `import "gitlab.com/toby3d/telegraph"`
 
 ## Examples
