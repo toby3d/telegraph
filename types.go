@@ -1,4 +1,3 @@
-//go:generate ffjson $GOFILE
 package telegraph
 
 import "errors"
