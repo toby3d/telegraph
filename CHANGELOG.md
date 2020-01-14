@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed `SUPPORT.md` to `CONTRIBUTING.md`
 - Updated patrons list in `CONTRIBUTING.md`
 - Updated patreon link
+- Updated current year in `LICENSE.md`
 
 ### Removed
 - `go:generate` comments
