@@ -1,30 +1,32 @@
 package telegraph
 
-import (
-	"strconv"
+type getPageList struct {
+	// Access token of the Telegraph account.
+	AccessToken string `json:"access_token"`
 
-	http "github.com/valyala/fasthttp"
-)
+	// Sequential number of the first page to be returned.
+	Offset int `json:"offset,omitempty"`
 
-// GetPageList get a list of pages belonging to a Telegraph account. Returns a PageList object, sorted
-// by most recently created pages first.
+	// Limits the number of pages to be retrieved.
+	Limit int `json:"limit,omitempty"`
+}
+
+// GetPageList get a list of pages belonging to a Telegraph account. Returns a PageList object, sorted by most
+// recently created pages first.
 func (a *Account) GetPageList(offset, limit int) (*PageList, error) {
-	args := http.AcquireArgs()
-	defer http.ReleaseArgs(args)
-	args.Add("access_token", a.AccessToken) // required
-	if offset > 0 {
-		args.Add("offset", strconv.Itoa(offset))
-	}
-	if limit > 0 {
-		args.Add("limit", strconv.Itoa(limit))
-	}
-
-	data, err := makeRequest("getPageList", args)
+	data, err := makeRequest("getPageList", getPageList{
+		AccessToken: a.AccessToken,
+		Offset:      offset,
+		Limit:       limit,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	var result PageList
-	err = parser.Unmarshal(data, &result)
-	return &result, err
+	result := new(PageList)
+	if err = parser.Unmarshal(data, result); err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }

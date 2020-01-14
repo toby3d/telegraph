@@ -1,26 +1,27 @@
 package telegraph
 
-import (
-	"strings"
+type getAccountInfo struct {
+	// Access token of the Telegraph account.
+	AccessToken string `json:"access_token"`
 
-	http "github.com/valyala/fasthttp"
-)
+	// List of account fields to return.
+	Fields []string `json:"fields,omitempty"`
+}
 
 // GetAccountInfo get information about a Telegraph account. Returns an Account object on success.
 func (a *Account) GetAccountInfo(fields ...string) (*Account, error) {
-	args := http.AcquireArgs()
-	defer http.ReleaseArgs(args)
-	args.Add("access_token", a.AccessToken) // required
-	if len(fields) > 0 {
-		args.Add("fields", `["`+strings.Join(fields, `","`)+`"]`)
-	}
-
-	data, err := makeRequest("getAccountInfo", args)
+	data, err := makeRequest("getAccountInfo", getAccountInfo{
+		AccessToken: a.AccessToken,
+		Fields:      fields,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	var result Account
-	err = parser.Unmarshal(data, &result)
-	return &result, err
+	result := new(Account)
+	if err = parser.Unmarshal(data, result); err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }

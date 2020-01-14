@@ -2,6 +2,7 @@ package telegraph_test
 
 import (
 	"log"
+	"time"
 
 	"gitlab.com/toby3d/telegraph"
 )
@@ -160,6 +161,7 @@ func ExampleAccount_GetPageList() {
 	errCheck(err)
 
 	log.Println("Getted", list.TotalCount, "pages")
+
 	for i := range list.Pages {
 		p := list.Pages[i]
 		log.Printf("%s: %s\n~ %s\n\n", p.Title, p.URL, p.Description)
@@ -168,7 +170,8 @@ func ExampleAccount_GetPageList() {
 
 func ExampleGetViews() {
 	pagePath := "Sample-Page-12-15"
-	views, err := telegraph.GetViews(pagePath, 2016, 12)
+	dateTime := time.Date(2016, time.December, 0, 0, 0, 0, 0, time.UTC)
+	views, err := telegraph.GetViews(pagePath, dateTime)
 	errCheck(err)
 
 	log.Println(pagePath, "has been viewed", views.Views, "times")
