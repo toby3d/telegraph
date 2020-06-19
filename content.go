@@ -41,7 +41,7 @@ func domToNode(domNode *html.Node) interface{} {
 		return nil
 	}
 
-	var nodeElement NodeElement
+	nodeElement := new(NodeElement)
 
 	switch strings.ToLower(domNode.Data) {
 	case "a", "aside", "b", "blockquote", "br", "code", "em", "figcaption", "figure", "h3", "h4", "hr", "i",

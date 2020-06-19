@@ -1,19 +1,20 @@
-package telegraph
+package telegraph_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"gitlab.com/toby3d/telegraph"
 )
 
 func TestRevokeAccessToken(t *testing.T) {
 	t.Run("invalid", func(t *testing.T) {
-		var account Account
+		var account telegraph.Account
 		_, err := account.RevokeAccessToken()
 		assert.Error(t, err)
 	})
 	t.Run("valid", func(t *testing.T) {
-		a, err := CreateAccount(Account{
+		a, err := telegraph.CreateAccount(telegraph.Account{
 			ShortName:  "Sandbox",
 			AuthorName: "Anonymous",
 		})

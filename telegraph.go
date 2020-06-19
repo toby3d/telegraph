@@ -52,7 +52,7 @@ func makeRequest(path string, payload interface{}) ([]byte, error) {
 	}
 
 	if !r.Ok {
-		return nil, errors.New(r.Error)
+		return nil, errors.New(r.Error) //nolint: goerr113
 	}
 
 	return r.Result, nil
