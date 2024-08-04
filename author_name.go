@@ -6,8 +6,6 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/brianvoe/gofakeit/v7"
-
 	"source.toby3d.me/toby3d/telegraph/internal/util"
 )
 
@@ -65,5 +63,5 @@ func (an AuthorName) GoString() string {
 func TestAuthorName(tb testing.TB) *AuthorName {
 	tb.Helper()
 
-	return &AuthorName{gofakeit.FirstName() + " " + gofakeit.LastName()}
+	return &AuthorName{"Anonymous"}
 }

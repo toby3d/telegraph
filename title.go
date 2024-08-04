@@ -5,8 +5,6 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/brianvoe/gofakeit/v7"
-
 	"source.toby3d.me/toby3d/telegraph/internal/util"
 )
 
@@ -67,9 +65,9 @@ func (t Title) GoString() string {
 	return "telegraph.Title(" + t.String() + ")"
 }
 
-// TestTitle returns valid random generated [Title] for tests.
+// TestTitle returns valid [Title] for tests.
 func TestTitle(tb testing.TB) *Title {
 	tb.Helper()
 
-	return &Title{gofakeit.SentenceSimple()}
+	return &Title{"Sample Page"}
 }

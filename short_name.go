@@ -6,8 +6,6 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/brianvoe/gofakeit/v7"
-
 	"source.toby3d.me/toby3d/telegraph/internal/util"
 )
 
@@ -64,5 +62,5 @@ func (sn ShortName) GoString() string {
 func TestShortName(tb testing.TB) *ShortName {
 	tb.Helper()
 
-	return &ShortName{gofakeit.Username()}
+	return &ShortName{"Sandbox"}
 }

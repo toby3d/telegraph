@@ -22,7 +22,7 @@ func Example() {
 		log.Fatalln("cannot create account:", err)
 	}
 
-	page, err := (telegraph.CreatePage{
+	page, err := telegraph.CreatePage{
 		AuthorURL:   nil,
 		AccessToken: account.AccessToken,
 		Title:       *util.Must(telegraph.NewTitle("Sample Page")),
@@ -34,7 +34,7 @@ func Example() {
 			},
 		}},
 		ReturnContent: true,
-	}).Do(context.Background(), client)
+	}.Do(context.Background(), client)
 	if err != nil {
 		log.Fatalln("cannot create page:", err)
 	}

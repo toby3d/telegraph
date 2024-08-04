@@ -3,8 +3,6 @@ package telegraph_test
 import (
 	"testing"
 
-	"github.com/brianvoe/gofakeit/v7"
-
 	"source.toby3d.me/toby3d/telegraph"
 )
 
@@ -39,7 +37,7 @@ func TestTitle_Update(t *testing.T) {
 	title := telegraph.TestTitle(t)
 	before := title.String()
 
-	if err := title.Update(gofakeit.SentenceSimple()); err != nil {
+	if err := title.Update("Chane Me"); err != nil {
 		t.Fatal(err)
 	}
 
