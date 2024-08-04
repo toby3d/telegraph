@@ -1,4 +1,4 @@
-package telegraph // import "source.toby3d.me/toby3d/telegraph"
+package telegraph
 
 import (
 	"context"
