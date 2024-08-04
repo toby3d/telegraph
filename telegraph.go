@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-
-	"source.toby3d.me/toby3d/telegraph/internal/common"
 )
 
 // response is a JSON object, which always has a Boolean field ok. If ok equals
@@ -60,7 +58,7 @@ func post[T any](ctx context.Context, client *http.Client, r io.Reader, method s
 		return result, fmt.Errorf("%s: cannot initialize request: %w", method, err)
 	}
 
-	req.Header.Set(common.HeaderContentType, common.MIMEApplicationJSON)
+	req.Header.Set("Content-Type", "application/json")
 
 	return do[T](client, req)
 }
