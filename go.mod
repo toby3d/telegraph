@@ -1,4 +1,4 @@
-module gitlab.com/toby3d/telegraph
+module source.toby3d.me/toby3d/telegraph
 
 require (
 	github.com/json-iterator/go v1.1.10
@@ -10,4 +10,4 @@ require (
 	golang.org/x/net v0.0.0-20200602114024-627f9648deb9
 )
 
-go 1.13
+go 1.22.0
