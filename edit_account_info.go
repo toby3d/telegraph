@@ -1,37 +1,38 @@
 package telegraph
 
-type editAccountInfo struct {
-	// Access token of the Telegraph account.
-	AccessToken string `json:"access_token"`
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/url"
+)
+
+// EditAccountInfo update information about a Telegraph account. Pass only the
+// parameters that you want to edit. On success, returns an [Account] object
+// with the default fields.
+type EditAccountInfo struct {
+	// New default profile link, opened when users click on the author's
+	// name below the title. Can be any link, not necessarily to a Telegram
+	// profile or channel.
+	AuthorURL *url.URL `json:"author_url,omitempty"` // 0-512 characters
 
 	// New account name.
-	ShortName string `json:"short_name,omitempty"`
+	ShortName *ShortName `json:"short_name,omitempty"` // 1-32 characters
 
 	// New default author name used when creating new articles.
-	AuthorName string `json:"author_name,omitempty"`
+	AuthorName *AuthorName `json:"author_name,omitempty"` // 0-128 characters
 
-	// New default profile link, opened when users click on the author's name below the title. Can be any link,
-	// not necessarily to a Telegram profile or channel.
-	AuthorURL string `json:"author_url,omitempty"`
+	// Required. Access token of the Telegraph account.
+	AccessToken string `json:"access_token"`
 }
 
-// EditAccountInfo update information about a Telegraph account. Pass only the parameters that you want to edit. On
-// success, returns an Account object with the default fields.
-func (a *Account) EditAccountInfo(update Account) (*Account, error) {
-	data, err := makeRequest("editAccountInfo", editAccountInfo{
-		AccessToken: a.AccessToken,
-		ShortName:   update.ShortName,
-		AuthorName:  update.AuthorName,
-		AuthorURL:   update.AuthorURL,
-	})
+func (params EditAccountInfo) Do(ctx context.Context, client *http.Client) (*Account, error) {
+	data, err := json.Marshal(params)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("editAccountInfo: cannot marshal request parameters: %w", err)
 	}
 
-	result := new(Account)
-	if err = parser.Unmarshal(data, result); err != nil {
-		return nil, err
-	}
-
-	return result, nil
+	return post[*Account](ctx, client, bytes.NewReader(data), "editAccountInfo")
 }

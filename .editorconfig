@@ -8,9 +8,9 @@ insert_final_newline = false
 trim_trailing_whitespace = true
 
 [*.go]
-indent_style = tab
 indent_size = 8
+indent_style = tab
 
 [*.{html,js,css,yaml,yml,md}]
-indent_style = space
 indent_size = 2
+indent_style = space
