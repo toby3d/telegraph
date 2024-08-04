@@ -11,6 +11,10 @@ type URL struct {
 	*url.URL `json:"-"`
 }
 
+func NewURL(u *url.URL) *URL {
+	return &URL{URL: u}
+}
+
 func (u *URL) UnmarshalJSON(v []byte) error {
 	unquoted, err := strconv.Unquote(string(v))
 	if err != nil {

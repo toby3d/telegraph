@@ -70,7 +70,7 @@ func (t *Tag) UnmarshalJSON(v []byte) error {
 	return nil
 }
 
-func (t *Tag) MarshalJSON() ([]byte, error) {
+func (t Tag) MarshalJSON() ([]byte, error) {
 	if t.tag != 0 {
 		return []byte(strconv.Quote(t.tag.String())), nil
 	}

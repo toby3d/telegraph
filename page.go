@@ -17,13 +17,13 @@ type Page struct {
 	Path string `json:"path,omitempty"`
 
 	// Title of the page.
-	Title string `json:"title,omitempty"`
+	Title *Title `json:"title,omitempty"`
 
 	// Description of the page.
 	Description string `json:"description,omitempty"`
 
 	// Optional. Name of the author, displayed below the title.
-	AuthorName string `json:"author_name,omitempty"`
+	AuthorName *AuthorName `json:"author_name,omitempty"`
 
 	// Optional. [Content] of the page.
 	Content []Node `json:"content,omitempty"`

@@ -14,10 +14,10 @@ type Account struct {
 	// [telegra.ph]: https://telegra.ph/
 	AuthURL *URL `json:"auth_url,omitempty"`
 
-	ShortName string `json:"short_name"`
+	ShortName ShortName `json:"short_name"`
 
 	// Default author name used when creating new articles.
-	AuthorName string `json:"author_name"`
+	AuthorName AuthorName `json:"author_name"`
 
 	// Optional. Only returned by the [createAccount] and
 	// [revokeAccessToken] method. Access token of the Telegraph account.
