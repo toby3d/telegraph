@@ -1,13 +1,13 @@
 package telegraph
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 	"testing"
-	"unicode/utf8"
 
 	"github.com/brianvoe/gofakeit/v7"
+
+	"source.toby3d.me/toby3d/telegraph/internal/util"
 )
 
 // Title represent page title.
@@ -15,21 +15,19 @@ type Title struct {
 	title string // 1-256 characters
 }
 
-var ErrTitleLength error = errors.New("unsupported length of the provided string")
-
 // NewTitle returns a new [Title] from string if validation successull, or
 // [ErrTitleLength] error if Title is too short or long.
 func NewTitle(raw string) (*Title, error) {
-	if count := utf8.RuneCountInString(raw); count < 1 || 256 < count {
-		return nil, fmt.Errorf("Title: %w: want 1-256 characters, got %d", ErrTitleLength, count)
+	if err := util.ValidateLength(raw, 1, 256); err != nil {
+		return nil, fmt.Errorf("Title: unsupported length: %w", err)
 	}
 
 	return &Title{raw}, nil
 }
 
 func (t *Title) Update(newTitle string) error {
-	if count := utf8.RuneCountInString(newTitle); count < 1 || 256 < count {
-		return fmt.Errorf("Title: %w: want 1-256 characters, got %d", ErrTitleLength, count)
+	if err := util.ValidateLength(newTitle, 1, 256); err != nil {
+		return fmt.Errorf("Title: unsupported length: %w", err)
 	}
 
 	t.title = newTitle

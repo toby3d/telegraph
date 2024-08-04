@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
-	"unicode/utf8"
 
 	"github.com/brianvoe/gofakeit/v7"
+
+	"source.toby3d.me/toby3d/telegraph/internal/util"
 )
 
 // AuthorName represent author name used when creating new articles.
@@ -19,8 +20,8 @@ var ErrAuthorNameLength error = errors.New("unsupported length")
 
 // NewAuthorName parse raw string as AuthorName and validate it's length.
 func NewAuthorName(raw string) (*AuthorName, error) {
-	if count := utf8.RuneCountInString(raw); 128 < count {
-		return nil, fmt.Errorf("AuthorName: %w: want up to 128 characters, got %d", ErrAuthorNameLength, count)
+	if err := util.ValidateLength(raw, -1, 128); err != nil {
+		return nil, fmt.Errorf("AuthorName: unsupported length: %w", err)
 	}
 
 	return &AuthorName{raw}, nil

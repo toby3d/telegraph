@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
-	"unicode/utf8"
 
 	"github.com/brianvoe/gofakeit/v7"
+
+	"source.toby3d.me/toby3d/telegraph/internal/util"
 )
 
 // ShortName represent account name, helps users with several accounts remember
@@ -21,8 +22,8 @@ var ErrShortNameLength error = errors.New("unsupported length")
 
 // NewShortName parse raw string as [ShortName] and validate it's length.
 func NewShortName(raw string) (*ShortName, error) {
-	if count := utf8.RuneCountInString(raw); count < 1 || 32 < count {
-		return nil, fmt.Errorf("ShortName: %w: want 1-32 characters, got %d", ErrShortNameLength, count)
+	if err := util.ValidateLength(raw, 1, 32); err != nil {
+		return nil, fmt.Errorf("ShortName: unsupported length: %w", err)
 	}
 
 	return &ShortName{raw}, nil
