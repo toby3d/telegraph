@@ -47,11 +47,3 @@ func TestTitle_Update(t *testing.T) {
 		t.Errorf("want not equal '%s', got '%s'", before, after)
 	}
 }
-
-func TestTitle_IsEmpty(t *testing.T) {
-	t.Parallel()
-
-	if actual, expect := (telegraph.Title{}).IsEmpty(), true; actual != expect {
-		t.Errorf("want %t, got %t", expect, actual)
-	}
-}

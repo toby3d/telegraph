@@ -27,9 +27,6 @@ func NewTitle(raw string) (*Title, error) {
 	return &Title{raw}, nil
 }
 
-// IsEmpty returns true if current [Title] is empty.
-func (t Title) IsEmpty() bool { return t.title == "" }
-
 func (t *Title) Update(newTitle string) error {
 	if count := utf8.RuneCountInString(newTitle); count < 1 || 256 < count {
 		return fmt.Errorf("Title: %w: want 1-256 characters, got %d", ErrTitleLength, count)

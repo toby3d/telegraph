@@ -30,3 +30,11 @@ func TestNewAuthorName(t *testing.T) {
 	f("long", "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima "+
 		"Trinidad Ruiz y Picasso")
 }
+
+func TestAuthorName_IsEmpty(t *testing.T) {
+	t.Parallel()
+
+	if actual, expect := (telegraph.AuthorName{}).IsEmpty(), true; actual != expect {
+		t.Errorf("want %t, got %t", expect, actual)
+	}
+}

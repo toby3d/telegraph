@@ -26,6 +26,9 @@ func NewAuthorName(raw string) (*AuthorName, error) {
 	return &AuthorName{raw}, nil
 }
 
+// IsEmpty returns true if current [AuthorName] is empty.
+func (an AuthorName) IsEmpty() bool { return an.authorName == "" }
+
 func (an *AuthorName) UnmarshalJSON(v []byte) error {
 	unquoted, err := strconv.Unquote(string(v))
 	if err != nil {
