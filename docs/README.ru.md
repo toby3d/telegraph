@@ -69,4 +69,4 @@ func main() {
 }
 ```
 
-Если вам понадобится помощь, [напишите мне](mailto:support@toby3d.me?subject=Telegraph). Если вы хотите помочь мне, [пришлите пожертвование](https://toby3d.me/en/pay).
+Если вам понадобится помощь, [напишите мне](mailto:support@toby3d.me?subject=Telegraph). Если вы хотите помочь мне, [пришлите пожертвование](https://toby3d.me/ru/pay).
