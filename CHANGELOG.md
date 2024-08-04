@@ -6,6 +6,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-08-05
+### Added
+- Localized `README.md`
+- `URL` domain
+- `Attributes` domain
+- `AuthorName` domain
+- `ShortName` domain
+- `Title` domain
+- `DefaultEndpoint` variable available
+
+### Fixed
+- Actualized links in docs
+
+### Changed
+- Package URL
+- Methods execution by Command pattern
+- Response parsing with generics
+- Content format and parsing now moved into `content` sub-package
+
+### Removed
+- God-struct `Telegraph`
+- GitHub configurations
+- GitLab configurations
+- `Response` struct is now hidden
+
 ## [1.2.1] - 2020-01-14
 ### Added
 - This `CHANGELOG.md` file
@@ -77,8 +102,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All available methods
 - Coverage tests
 
-[Unreleased]: https://gitlab.com/toby3d/telegraph/compare/v1.2.1...develop
-[1.2.1]: https://gitlab.com/toby3d/telegraph/compare/v1.2.0...v1.2.1
-[1.2.0]: https://gitlab.com/toby3d/telegraph/compare/v1.1.0...v1.2.0
-[1.1.0]: https://gitlab.com/toby3d/telegraph/compare/v1.0.0...v1.1.0
-[1.0.0]: https://gitlab.com/toby3d/telegraph/tree/v1.0.0
+[Unreleased]: https://source.toby3d.me/toby3d/telegraph/compare/v2.0.0...develop
+[2.0.0]: https://source.toby3d.me/toby3d/telegraph/compare/v1.2.1...v2.0.0
+[1.2.1]: https://source.toby3d.me/toby3d/telegraph/compare/v1.2.0...v1.2.1
+[1.2.0]: https://source.toby3d.me/toby3d/telegraph/compare/v1.1.0...v1.2.0
+[1.1.0]: https://source.toby3d.me/toby3d/telegraph/compare/v1.0.0...v1.1.0
+[1.0.0]: https://source.toby3d.me/toby3d/telegraph/tree/v1.0.0
