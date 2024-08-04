@@ -15,3 +15,40 @@ type NodeElement struct {
 	// pre, s, strong, u, ul, video.
 	Tag Tag `json:"tag"`
 }
+
+func NewNodeElement(tag Tag) *NodeElement {
+	return &NodeElement{
+		Attrs:    new(Attributes),
+		Children: make([]Node, 0),
+		Tag:      tag,
+	}
+}
+
+func (ne NodeElement) String() string {
+	result := "<" + ne.Tag.String()
+
+	if ne.Attrs != nil {
+		switch {
+		case ne.Attrs.Href != "":
+			result += ` href="` + ne.Attrs.Href + `"`
+		case ne.Attrs.Src != "":
+			result += ` src="` + ne.Attrs.Src + `"`
+		}
+	}
+
+	if len(ne.Children) == 0 {
+		return result + " />"
+	}
+
+	result += ">"
+
+	for _, n := range ne.Children {
+		result += n.String()
+	}
+
+	return result + "</" + ne.Tag.String() + ">"
+}
+
+func (ne NodeElement) GoString() string {
+	return "telegraph.NodeElement(" + ne.String() + ")"
+}
