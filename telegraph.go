@@ -1,84 +1,59 @@
 package telegraph
 
 import (
-	"context"
 	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
-	"net/url"
-	"path"
+	"errors"
+
+	jsoniter "github.com/json-iterator/go"
+	http "github.com/valyala/fasthttp"
 )
 
-// response is a JSON object, which always has a Boolean field ok. If ok equals
-// true, the request was successful, and the result of the query can be found in
-// the result field. In case of an unsuccessful request, ok equals false, and
-// the error is explained in the error field (e.g. SHORT_NAME_REQUIRED).
-type response[T any] struct {
-	Result T      `json:"result,omitempty"`
-	Error  string `json:"error,omitempty"`
-	OK     bool   `json:"ok"`
+// Response contains a JSON object, which always has a Boolean field ok. If ok equals true, the request was
+// successful, and the result of the query can be found in the result field. In case of an unsuccessful request, ok
+// equals false, and the error is explained in the error field (e.g. SHORT_NAME_REQUIRED).
+type Response struct {
+	Ok     bool            `json:"ok"`
+	Error  string          `json:"error,omitempty"`
+	Result json.RawMessage `json:"result,omitempty"`
 }
 
-var DefaultEndpoint *url.URL = &url.URL{
-	Scheme: "https",
-	Host:   "api.telegra.ph",
-	Path:   "/",
-}
+var parser = jsoniter.ConfigFastest //nolint:gochecknoglobals
 
-func get[T any](ctx context.Context, client *http.Client, data url.Values, method string, pagePath ...string) (T, error) {
-	u, _ := url.ParseRequestURI(DefaultEndpoint.String())
-	u.Path = path.Join("/", method)
-	u.RawQuery = data.Encode()
-
-	if 0 < len(pagePath) {
-		u.Path = path.Join("/", method, pagePath[0])
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+func makeRequest(path string, payload interface{}) ([]byte, error) {
+	src, err := parser.Marshal(payload)
 	if err != nil {
-		var result T
-		return result, fmt.Errorf("%s: cannot initialize request: %w", method, err)
+		return nil, err
 	}
 
-	return do[T](client, req)
-}
+	u := http.AcquireURI()
+	defer http.ReleaseURI(u)
+	u.SetScheme("https")
+	u.SetHost("api.telegra.ph")
+	u.SetPath(path)
 
-func post[T any](ctx context.Context, client *http.Client, r io.Reader, method string, pagePath ...string) (T, error) {
-	u, _ := url.ParseRequestURI(DefaultEndpoint.String())
-	u.Path = path.Join("/", method)
+	req := http.AcquireRequest()
+	defer http.ReleaseRequest(req)
+	req.SetRequestURIBytes(u.FullURI())
+	req.Header.SetMethod(http.MethodPost)
+	req.Header.SetUserAgent("toby3d/telegraph")
+	req.Header.SetContentType("application/json")
+	req.SetBody(src)
 
-	if 0 < len(pagePath) {
-		u.Path = path.Join("/", method, pagePath[0])
+	resp := http.AcquireResponse()
+	defer http.ReleaseResponse(resp)
+
+	if err := http.Do(req, resp); err != nil {
+		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, u.String(), r)
-	if err != nil {
-		var result T
-		return result, fmt.Errorf("%s: cannot initialize request: %w", method, err)
+	r := new(Response)
+	if err := parser.Unmarshal(resp.Body(), r); err != nil {
+		return nil, err
 	}
 
-	req.Header.Set("Content-Type", "application/json")
-
-	return do[T](client, req)
-}
-
-func do[T any](client *http.Client, req *http.Request) (T, error) {
-	result := new(response[T])
-
-	resp, err := client.Do(req)
-	if err != nil {
-		return result.Result, fmt.Errorf("cannot make request: %w", err)
-	}
-	defer resp.Body.Close()
-
-	if err = json.NewDecoder(resp.Body).Decode(result); err != nil {
-		return result.Result, fmt.Errorf("cannot decode response: %w", err)
+	if !r.Ok {
+		return nil, errors.New(r.Error) //nolint: goerr113
 	}
 
-	if result.OK {
-		return result.Result, nil
-	}
-
-	return result.Result, fmt.Errorf("error response: %s", result.Error)
+	return r.Result, nil
 }
