@@ -35,7 +35,7 @@ type EditPage struct {
 	ReturnContent bool `json:"return_content,omitempty"` // false
 }
 
-func (params EditPage) EditPage(ctx context.Context, client *http.Client) (*Page, error) {
+func (params EditPage) Do(ctx context.Context, client *http.Client) (*Page, error) {
 	data, err := json.Marshal(params)
 	if err != nil {
 		return nil, fmt.Errorf("editPage: cannot marshal request parameters: %w", err)
