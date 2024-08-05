@@ -1,21 +1,21 @@
-# telegraph [![Go Reference](https://pkg.go.dev/badge/source.toby3d.me/toby3d/telegraph.svg)](https://pkg.go.dev/source.toby3d.me/toby3d/telegraph)
-![](cover.jpg)
+# telegraph [![Go Reference](https://pkg.go.dev/badge/source.toby3d.me/toby3d/telegraph/v2.svg)](https://pkg.go.dev/source.toby3d.me/toby3d/telegraph/v2)
+![](assets/cover.jpg)
 
-A simple package [with minimum official dependencies](../go.mod) to work with [Telegraph API](https://telegra.ph/api).
+A simple package [with minimum official dependencies](v2/go.mod) to work with [Telegraph API](https://telegra.ph/api).
 
 Download:
 ```bash
-$ go get -u source.toby3d.me/toby3d/telegraph
+$ go get -u source.toby3d.me/toby3d/telegraph/v2
 ```
 
 Import:
 ```
-import "source.toby3d.me/toby3d/telegraph"
+import "source.toby3d.me/toby3d/telegraph/v2"
 ```
 
 Fill commands structs and execute it:
 ```go
-package telegraph_test
+package main
 
 import (
   "context"
@@ -23,7 +23,7 @@ import (
   "log"
   "net/http"
 
-  "source.toby3d.me/toby3d/telegraph"
+  "source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func Must[T any](v T, err error) T {

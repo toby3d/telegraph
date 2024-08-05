@@ -1,21 +1,21 @@
-# telegraph [![Go Reference](https://pkg.go.dev/badge/source.toby3d.me/toby3d/telegraph.svg)](https://pkg.go.dev/source.toby3d.me/toby3d/telegraph)
-![](cover.jpg)
+# telegraph [![Go Reference](https://pkg.go.dev/badge/source.toby3d.me/toby3d/telegraph/v2.svg)](https://pkg.go.dev/source.toby3d.me/toby3d/telegraph/v2)
+![](assets/cover.jpg)
 
-Простой пакет [с минимумом официальных зависимостей](../go.mod) для работы с [Telegraph API](https://telegra.ph/api).
+Простой пакет [с минимумом официальных зависимостей](v2/go.mod) для работы с [Telegraph API](https://telegra.ph/api).
 
 Загрузите:
 ```bash
-$ go get -u source.toby3d.me/toby3d/telegraph
+$ go get -u source.toby3d.me/toby3d/telegraph/v2
 ```
 
 Импортируйте:
 ```
-import "source.toby3d.me/toby3d/telegraph"
+import "source.toby3d.me/toby3d/telegraph/v2"
 ```
 
 Заполните структуры команд и вызовите их:
 ```go
-package telegraph_test
+package main
 
 import (
   "context"
@@ -23,7 +23,7 @@ import (
   "log"
   "net/http"
 
-  "source.toby3d.me/toby3d/telegraph"
+  "source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func Must[T any](v T, err error) T {
