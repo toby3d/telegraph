@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"gitlab.com/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph"
 )
 
 // Content in a string format (for this example).

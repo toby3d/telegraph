@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph"
 )
 
 func TestGetViews(t *testing.T) {

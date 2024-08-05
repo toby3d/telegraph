@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph"
 )
 
 func TestGetAccountInfo(t *testing.T) {

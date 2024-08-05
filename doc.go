@@ -11,4 +11,4 @@ page.
 Anyone can enjoy the simplicity of Telegraph publishing, not just Telegram users. For this reason, all developers are
 welcome to use this Telegraph API to create bots like @Telegraph for any other platform, or even standalone interfaces.
 */
-package telegraph // import "gitlab.com/toby3d/telegraph"
+package telegraph // import "source.toby3d.me/toby3d/telegraph"
