@@ -1,45 +1,52 @@
 package telegraph
 
 import (
-	"bytes"
-	"context"
-	"encoding/json"
-	"fmt"
-	"net/http"
+	"path"
 )
 
-// EditPage edit an existing Telegraph page. On success, returns a [Page]
-// object.
-type EditPage struct {
-	// Profile link, opened when users click on the author's name below the
-	// title. Can be any link, not necessarily to a Telegram profile or
-	// channel.
-	AuthorURL *URL `json:"author_url,omitempty"` // 0-512 characters
-
-	// Required. Access token of the Telegraph account.
+type editPage struct {
+	// Access token of the Telegraph account.
 	AccessToken string `json:"access_token"`
 
-	// Required. Path to the page.
+	// Path to the page.
 	Path string `json:"path"`
 
-	// Required. Page title.
-	Title Title `json:"title"` // 1-256 characters
+	// Page title.
+	Title string `json:"title"`
+
+	// Content of the page.
+	Content []Node `json:"content"`
 
 	// Author name, displayed below the article's title.
-	AuthorName *AuthorName `json:"author_name,omitempty"` // 0-128 characters
+	AuthorName string `json:"author_name,omitempty"`
 
-	// Required. [Content] of the page.
-	Content []Node `json:"content"` // up to 64 KB
+	// Profile link, opened when users click on the author's name below the title. Can be any link, not
+	// necessarily to a Telegram profile or channel.
+	AuthorURL string `json:"author_url,omitempty"`
 
-	// If true, a content field will be returned in the [Page] object.
-	ReturnContent bool `json:"return_content,omitempty"` // false
+	// If true, a content field will be returned in the Page object.
+	ReturnContent bool `json:"return_content,omitempty"`
 }
 
-func (params EditPage) EditPage(ctx context.Context, client *http.Client) (*Page, error) {
-	data, err := json.Marshal(params)
+// EditPage edit an existing Telegraph page. On success, returns a Page object.
+func (a *Account) EditPage(update Page, returnContent bool) (*Page, error) {
+	data, err := makeRequest(path.Join("editPage", update.Path), editPage{
+		AccessToken:   a.AccessToken,
+		Path:          update.Path,
+		Title:         update.Title,
+		Content:       update.Content,
+		AuthorName:    update.AuthorName,
+		AuthorURL:     update.AuthorURL,
+		ReturnContent: returnContent,
+	})
 	if err != nil {
-		return nil, fmt.Errorf("editPage: cannot marshal request parameters: %w", err)
+		return nil, err
 	}
 
-	return post[*Page](ctx, client, bytes.NewReader(data), "editPage", params.Path)
+	result := new(Page)
+	if err = parser.Unmarshal(data, result); err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }

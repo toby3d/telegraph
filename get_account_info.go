@@ -1,58 +1,27 @@
 package telegraph
 
-import (
-	"context"
-	"net/http"
-	"net/url"
-	"strconv"
-	"strings"
-)
+type getAccountInfo struct {
+	// Access token of the Telegraph account.
+	AccessToken string `json:"access_token"`
 
-type (
-	// GetAccountInfo get information about a Telegraph account. Returns an
-	// [Account] object on success.
-	GetAccountInfo struct {
-		// Required. Access token of the Telegraph account.
-		AccessToken string `json:"access_token"`
-
-		// List of account fields to return.
-		Fields []AccountField `json:"fields,omitempty"` // ["short_name","author_name","author_url"]
-	}
-
-	AccountField struct{ accountField string }
-)
-
-var (
-	AuthorNameField AccountField = AccountField{"author_name"}
-	AuthorURLField  AccountField = AccountField{"author_url"}
-	AuthURLField    AccountField = AccountField{"auth_url"}
-	PageCountField  AccountField = AccountField{"page_count"}
-	ShortNameField  AccountField = AccountField{"short_name"}
-)
-
-func (params GetAccountInfo) Do(ctx context.Context, client *http.Client) (*Account, error) {
-	data := make(url.Values)
-	params.populate(data)
-
-	return get[*Account](ctx, client, data, "getAccountInfo")
+	// List of account fields to return.
+	Fields []string `json:"fields,omitempty"`
 }
 
-func (p GetAccountInfo) populate(dst url.Values) {
-	dst.Set("access_token", p.AccessToken)
-
-	if len(p.Fields) == 0 {
-		return
+// GetAccountInfo get information about a Telegraph account. Returns an Account object on success.
+func (a *Account) GetAccountInfo(fields ...string) (*Account, error) {
+	data, err := makeRequest("getAccountInfo", getAccountInfo{
+		AccessToken: a.AccessToken,
+		Fields:      fields,
+	})
+	if err != nil {
+		return nil, err
 	}
 
-	values := make([]string, 0, len(p.Fields))
-
-	for i := range p.Fields {
-		if p.Fields[i].accountField == "" {
-			continue
-		}
-
-		values = append(values, strconv.Quote(p.Fields[i].accountField))
+	result := new(Account)
+	if err = parser.Unmarshal(data, result); err != nil {
+		return nil, err
 	}
 
-	dst.Set("fields", "["+strings.Join(values, ",")+"]")
+	return result, nil
 }
