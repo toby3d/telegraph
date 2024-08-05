@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"source.toby3d.me/toby3d/telegraph"
-	"source.toby3d.me/toby3d/telegraph/internal/util"
+	"source.toby3d.me/toby3d/telegraph/v2"
+	"source.toby3d.me/toby3d/telegraph/v2/internal/util"
 )
 
 func Example() {

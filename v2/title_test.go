@@ -3,7 +3,7 @@ package telegraph_test
 import (
 	"testing"
 
-	"source.toby3d.me/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func TestNewTitle(t *testing.T) {

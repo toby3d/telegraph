@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	"source.toby3d.me/toby3d/telegraph/internal/util"
+	"source.toby3d.me/toby3d/telegraph/v2/internal/util"
 )
 
 // AuthorName represent author name used when creating new articles.

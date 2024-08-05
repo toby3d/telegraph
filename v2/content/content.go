@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 
-	"source.toby3d.me/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func DomToNode(domNode *html.Node) *telegraph.Node {

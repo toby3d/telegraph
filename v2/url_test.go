@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"source.toby3d.me/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func TestURL_UnmarshalJSON(t *testing.T) {

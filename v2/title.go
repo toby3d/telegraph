@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"source.toby3d.me/toby3d/telegraph/internal/util"
+	"source.toby3d.me/toby3d/telegraph/v2/internal/util"
 )
 
 // Title represent page title.

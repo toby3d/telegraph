@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"source.toby3d.me/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func TestNodeElement_MarshalJSON(t *testing.T) {

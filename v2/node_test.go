@@ -10,7 +10,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 
-	"source.toby3d.me/toby3d/telegraph"
+	"source.toby3d.me/toby3d/telegraph/v2"
 )
 
 func TestNode_UnmarshalJSON(t *testing.T) {

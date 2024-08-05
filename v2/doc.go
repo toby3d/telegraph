@@ -18,4 +18,4 @@
 // [Instant View]: https://telegram.org/blog/instant-view
 // [@Telegraph]: https://telegram.me/telegraph
 // [Telegram]: https://telegram.org/
-package telegraph // import "source.toby3d.me/toby3d/telegraph"
+package telegraph // import "source.toby3d.me/toby3d/telegraph/v2"

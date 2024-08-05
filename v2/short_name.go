@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	"source.toby3d.me/toby3d/telegraph/internal/util"
+	"source.toby3d.me/toby3d/telegraph/v2/internal/util"
 )
 
 // ShortName represent account name, helps users with several accounts remember

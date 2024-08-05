@@ -10,8 +10,8 @@ import (
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
 
-	"source.toby3d.me/toby3d/telegraph"
-	"source.toby3d.me/toby3d/telegraph/content"
+	"source.toby3d.me/toby3d/telegraph/v2"
+	"source.toby3d.me/toby3d/telegraph/v2/content"
 )
 
 func TestDomToNode(t *testing.T) {
