@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 )
 
 // EditAccountInfo update information about a Telegraph account. Pass only the
@@ -16,7 +15,7 @@ type EditAccountInfo struct {
 	// New default profile link, opened when users click on the author's
 	// name below the title. Can be any link, not necessarily to a Telegram
 	// profile or channel.
-	AuthorURL *url.URL `json:"author_url,omitempty"` // 0-512 characters
+	AuthorURL *URL `json:"author_url,omitempty"` // 0-512 characters
 
 	// New account name.
 	ShortName *ShortName `json:"short_name,omitempty"` // 1-32 characters
